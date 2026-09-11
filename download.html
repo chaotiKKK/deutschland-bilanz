@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Die Bilanz der Republik herunterladen — HTML & APK für Android" />
+<title>Die Bilanz der Republik · Download</title>
+<style>
+:root{--ink:#1c2640;--paper:#faf8f2;--gold:#b9953f;--line:#ddd5c4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:var(--paper);color:var(--ink);padding:2rem;max-width:800px;margin:0 auto}
+h1{font-size:2rem;margin-bottom:.5rem}
+.sub{color:var(--ink-soft,#3a4a63);margin-bottom:2rem}
+.card{border:1px solid var(--line);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;background:#fff}
+.card h2{font-size:1.2rem;margin-bottom:.5rem}
+.card p{color:#66778f;font-size:.9rem;line-height:1.5;margin-bottom:1rem}
+.btn{display:inline-block;padding:12px 24px;background:var(--ink);color:var(--paper);text-decoration:none;border-radius:4px;font-weight:600;font-size:1rem;transition:background .2s}
+.btn:hover{background:#2c3a54}
+.btn-gold{background:var(--gold)}
+.btn-gold:hover{background:#a07e32}
+.versions{font-family:monospace;font-size:.85rem;color:#66778f;margin-top:.5rem}
+.footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.8rem;color:#66778f}
+</style>
+</head>
+<body>
+<h1>Die Bilanz der Republik</h1>
+<p class="sub">Haushaltsbuch über Ausgaben, Steuern, Schulden, Soziales und Energie Deutschlands 2014–2026</p>
+
+<div class="card">
+<h2>📄 HTML-Version</h2>
+<p>Die vollständige Webseite als einzelne HTML-Datei. Keine Installation nötig. Funktioniert in jedem Browser.</p>
+<a class="btn" href="https://raw.githubusercontent.com/chaotiKKK/deutschland-bilanz/main/index.html" download="deutschland-bilanz.html">HTML herunterladen (index.html)</a>
+<p class="versions">Version: 2.2.0 · 3.632 Zeilen · ~245 KB · Offline-fähig mit Service Worker</p>
+</div>
+
+<div class="card">
+<h2>📱 Android APK</h2>
+<p>Native Android-App mit WebView. Läuft die Webseite offline in einem eigenen Fenster. Unterstützt Android API 24+.</p>
+<a class="btn btn-gold" href="https://github.com/chaotiKKK/deutschland-bilanz/releases">APK herunterladen (Release)</a>
+<p class="versions">Version: 2.2.0 · Android API 24+ · Service Worker offline · WebView mit JavaScript</p>
+</div>
+
+<div class="card">
+<h2>🔧 Quick Start</h2>
+<p><strong>HTML:</strong> Datei herunterladen, im Browser öffnen, fertig.</p>
+<p><strong>Android:</strong> APK installieren, App öffnen, Webseite läuft vollständig offline.</p>
+<p><strong>Entwicklung:</strong> <code>git clone https://github.com/chaotiKKK/deutschland-bilanz.git</code></p>
+</div>
+
+<div class="card">
+<h2>🛠️ Technologie-Stack</h2>
+<p>Vanilla HTML/CSS/JS · Custom SVG-Charts · Vite (Dev) · GitHub Actions (CI/CD) · GitHub Pages (Deployment) · Android WebView (APK) · Service Worker (Offline)</p>
+</div>
+
+<div class="footer">
+<p>© 2026 Die Bilanz der Republik · <a href="https://github.com/chaotiKKK/deutschland-bilanz">GitHub</a> · <a href="https://github.com/chaotiKKK/deutschland-bilanz/blob/main/LICENSE">CC-BY 4.0</a></p>
+</div>
+</body>
+</html>
