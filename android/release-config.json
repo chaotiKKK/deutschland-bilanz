@@ -1,0 +1,8 @@
+{
+  "name": "Die Bilanz der Republik v2.2.0",
+  "tag_name": "v2.2.0",
+  "draft": false,
+  "prerelease": false,
+  "body": "Die Bilanz der Republik — Android APK\n\nFeatures:\n- 51 interaktive SVG-Charts\n- Geschichte 1981–2026\n- Steuerrechner, EU-Vergleich, Inflationsrechner\n- Offline-fähig via Service Worker\n- 6 Themes\n- Terminologie-Farbkodierung\n\nBauen: GitHub Actions | Plattform: Android API 24+\n\nQuelle: https://github.com/chaotiKKK/deutschland-bilanz",
+  "assets": []
+}
