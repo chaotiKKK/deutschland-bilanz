@@ -598,7 +598,151 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
 /* Dark mode themes */
 [data-theme="dunkel"], [data-theme="dark"] { filter: brightness(0.85) contrast(1.1); }
 [data-theme="dunkel"] .card { background: #1a1a2e; border-color: #333; }
+
+/* ============================================================
+   v2.3.0 — Zusatz-Themes (10er-System) + Frontend-Polish
+   ============================================================ */
+
+/* ---------- Theme: hochkontrast-hell (AA: helle Fläche + schwarze Kanten) ---------- */
+html[data-theme="hochkontrast-hell"]{
+  --ink:#000000; --ink-soft:#1a1a1a; --muted:#3d3d3d;
+  --paper:#ffffff; --paper-2:#f4f4f4; --line:#000000;
+  --red:#b00020; --red-soft:#f3d9dd;
+  --green:#00562e; --green-soft:#d9ebdf;
+  --gold:#6a5200;
+}
+html[data-theme="hochkontrast-hell"] body{ background-image:none; }
+html[data-theme="hochkontrast-hell"] .card{ border-width:2px; }
+html[data-theme="hochkontrast-hell"] .treaty-accordion{ border-width:2px; border-color:#000; }
+html[data-theme="hochkontrast-hell"] .callout.gold{ background:#f4edda; }
+html[data-theme="hochkontrast-hell"] .status-partial{ background:#f4edda; color:#6a5200; }
+
+/* ---------- Theme: neutralgrau (monochrom, farbenfehlerfreundlich) ---------- */
+html[data-theme="neutralgrau"]{
+  --ink:#191919; --ink-soft:#3a3a3a; --muted:#6a6a6a;
+  --paper:#f8f8f8; --paper-2:#ededed; --line:#c9c9c9;
+  --red:#3d3d3d; --red-soft:#e4e4e4;
+  --green:#000000; --green-soft:#dcdcdc;
+  --gold:#555555;
+}
+html[data-theme="neutralgrau"] body{
+  background-image:
+    linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.035) 1px, transparent 1px);
+}
+html[data-theme="neutralgrau"] .callout.gold{ background:#e8e8e8; }
+html[data-theme="neutralgrau"] .status-partial{ background:#e8e8e8; color:#555; }
+html[data-theme="neutralgrau"] .status-terminated{ background:#dedede; color:#444; border-color:#666; }
+
+/* ---------- Theme: solarized (Solarized Light) ---------- */
+html[data-theme="solarized"]{
+  --ink:#073642; --ink-soft:#586e75; --muted:#93a1a1;
+  --paper:#fdf6e3; --paper-2:#eee8d5; --line:#dcd3b6;
+  --red:#dc322f; --red-soft:#f3d4cf;
+  --green:#859900; --green-soft:#e2e6c7;
+  --gold:#b58900;
+}
+html[data-theme="solarized"] body{
+  background-image:
+    linear-gradient(rgba(7,54,66,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7,54,66,.04) 1px, transparent 1px);
+}
+html[data-theme="solarized"] .callout.gold{ background:#f0e6c6; }
+html[data-theme="solarized"] .status-partial{ background:#f0e6c6; color:#7c5e00; }
+
+/* ---------- Theme: solarized-dark ---------- */
+html[data-theme="solarized-dark"]{
+  --ink:#93a1a1; --ink-soft:#839496; --muted:#657b83;
+  --paper:#002b36; --paper-2:#073642; --line:#164450;
+  --red:#dc322f; --red-soft:#45211e;
+  --green:#859900; --green-soft:#28331a;
+  --gold:#b58900;
+}
+html[data-theme="solarized-dark"] body{ background-image:none; }
+html[data-theme="solarized-dark"] .callout.gold{ background:#3b3013; }
+html[data-theme="solarized-dark"] .status-partial{ background:#3b3013; color:#d3a200; }
+html[data-theme="solarized-dark"] .status-terminated{ background:#222222; color:#999999; border-color:#777777; }
+html[data-theme="solarized-dark"] .toc{ box-shadow:0 1px 0 rgba(0,0,0,.45); }
+html[data-theme="solarized-dark"] svg .org-top{ fill:#586e75; }
+html[data-theme="solarized-dark"] .beam-inner .bar{ background:#cbd3e2; }
+html[data-theme="solarized-dark"] .beam-inner .pivot, html[data-theme="solarized-dark"] .beam-inner .cup{ border-color:#cbd3e2; }
+html[data-theme="solarized-dark"] .beam-inner .cup ol{ background:#cbd3e2; }
+html[data-theme="solarized-dark"] .pills .pill{ background:var(--paper-2); }
+
+/* ---------- Frontend-Polish v2.3.0: :has(), color-mix(), text-wrap, Timeline, Dialog ---------- */
+.card:has(.chart-box[data-chart]){ border-top:2px solid var(--line); }
+.card:has(.chart-box[data-chart]):focus-within{ border-top-color:var(--gold); }
+.treaty-accordion:has(.full-text[open]):not(.search-hit),
+.treaty-accordion:has(.article-acc[open]):not(.search-hit){ border-color:var(--gold); }
+
+@supports (background: color-mix(in srgb, red 50%, blue)) {
+  .btn:hover{ background:color-mix(in srgb, var(--paper) 86%, var(--ink)); }
+  .toc a:hover{ color:color-mix(in srgb, var(--red) 80%, var(--ink)); }
+  .pill:hover{ background:color-mix(in srgb, var(--paper-2) 70%, var(--paper)); }
+}
+
+.phase-tag h2, .card h3, .hero-copy h2, dialog h4{ text-wrap:balance; }
+
+/* Unified Timeline 1981–2026 (46 Punkte, scroll-snap, Fallback ohne animation-timeline) */
+.history-slider-container input[type="range"]{ width:100%; accent-color:var(--red); }
+.utl{
+  display:flex; align-items:flex-start; gap:5px;
+  overflow-x:auto; scroll-snap-type:x proximity;
+  padding:10px 4px 24px; margin:8px 0 12px;
+  border-top:1px solid var(--line); border-bottom:1px dashed var(--line);
+  position:relative;
+}
+.utl-dot{
+  scroll-snap-align:center; flex:0 0 auto;
+  width:13px; height:13px; margin-top:8px;
+  border-radius:50%; border:2px solid var(--muted);
+  background:var(--paper); cursor:pointer; padding:0;
+  transition:transform .12s ease, border-color .12s ease, background .12s ease;
+  position:relative;
+}
+.utl-dot:hover{ transform:scale(1.35); border-color:var(--red); }
+.utl-dot.on{ background:var(--red); border-color:var(--red); transform:scale(1.25); }
+.utl-dot.focus:not(.on){ border-color:var(--gold); }
+.utl-dot.decade::after{
+  content:attr(data-year); position:absolute; top:15px; left:50%; transform:translateX(-50%);
+  font-family:var(--mono); font-size:.58rem; color:var(--muted);
+}
+.utl-progress{
+  position:absolute; left:0; top:0; height:3px; width:100%;
+  background:linear-gradient(90deg, var(--gold), var(--red));
+  transform-origin:0 50%; transform:scaleX(0);
+  pointer-events:none;
+}
+@supports (animation-timeline: scroll()) {
+  .utl-progress{
+    animation: utlProgress linear both;
+    animation-timeline: scroll(inline nearest);
+  }
+  @keyframes utlProgress { from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+}
+.hist-line{ font-size:.88rem; margin:5px 0; line-height:1.55; }
+.hist-laws{ font-size:.76rem; color:var(--muted); font-family:var(--mono); margin:6px 0 2px; }
+#historyDisplay h3{ margin-bottom:6px; }
+
+/* Dialog (ARIA-freundlicher Volltext-Trigger) */
+dialog#dlg-example{
+  max-width:640px; width:min(92vw, 640px);
+  border:1px solid var(--line); border-radius:6px;
+  background:var(--paper); color:var(--ink); padding:20px 22px;
+}
+dialog#dlg-example::backdrop{ background:rgba(0,0,0,.42); }
+dialog#dlg-example form{ margin-top:14px; text-align:right; }
+
+/* Web Component <bilanz-chart> (Migrations-Demo, kein Shadow DOM) */
+bilanz-chart{ display:block; }
 </style>
+<script type="speculationrules">
+{
+  "prefetch": [
+    { "source": "list", "urls": ["index.html", "download.html", "manifest.json"], "eagerness": "moderate" }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -631,6 +775,8 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
     <a href="#sec-xi">XI USA-Kriege</a>
     <a href="#sec-xii">XII SU/RU-Kriege</a>
     <a href="#sec-xiii">XIII Programme</a>
+    <a href="#sec-staat-politik">XIV Staat</a>
+    <a href="#sec-staatsaufbau">XV Aufbau</a>
     <span class="spacer"></span>
     <button class="btn print-hide" id="btnPrint" onclick="window.print()">PDF</button>
     <button class="btn print-hide" id="btnTheme" onclick="toggleTheme()">Dunkel</button>
@@ -643,6 +789,10 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
         <button class="btn" data-theme-btn="sepia">Sepia</button>
         <button class="btn" data-theme-btn="ozean">Ozean</button>
         <button class="btn" data-theme-btn="tanne">Tanne</button>
+        <button class="btn" data-theme-btn="hochkontrast-hell">HK-Hell</button>
+        <button class="btn" data-theme-btn="neutralgrau">Grau</button>
+        <button class="btn" data-theme-btn="solarized">Solarized</button>
+        <button class="btn" data-theme-btn="solarized-dark">Sol-Dark</button>
       </span>
       <span class="dc-group"><span class="dc-label">Zoom</span>
         <button class="btn" id="btnZoomOut" aria-label="Ansicht verkleinern">−</button>
@@ -919,6 +1069,7 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
           <div class="kpi"><div class="lab">2024</div><div class="val">62,2&thinsp;%</div></div>
         </div>
         <div class="callout gold">EU-Schuldenanteil Deutschlands (2025): ca. <strong>118 Mrd.&thinsp;€</strong> (2,6&thinsp;% des BIP).</div>
+        <div class="callout">Zur Verfassungsregel dahinter: <a href="#card-schuldenbremse">Schuldenbremse — Geschichte 2009–2026</a> im Kapitel <a href="#sec-staat-politik">XIV Staat &amp; Politik</a>.</div>
       </div>
 
       <div class="card k-gold">
@@ -1010,6 +1161,7 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
           </table>
         </div>
         <div class="callout">Rang in der NATO (2026): <strong>Platz 2</strong> hinter den USA. Die <strong>EU/NATO-Europäer</strong> kommen 2026 zusammen auf ~680 Mrd.&thinsp;€, die USA auf &gt;&thinsp;1 Bio.&thinsp;€. Deutschland plant, bis 2029 auf <strong>3,5&thinsp;%</strong> zu kommen.</div>
+        <div class="callout">Kommandostruktur des Bündnisses: <a href="#sec-staatsaufbau">Organigramm NATO-Struktur</a> im Kapitel XV — vom Nordatlantikrat über SACEUR bis zu den deutschen Beiträgen.</div>
       </div>
 
       <div class="card k-gold">
@@ -1035,6 +1187,7 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
           </table>
         </div>
         <div class="callout gold">Für jeden Euro, den Deutschland nach Brüssel schickt, fließen <strong>~39&thinsp;Cent</strong> zurück (Agrarpolitik ~6,1 Mrd., Forschung ~2,8 Mrd., Kohäsion ~2,5 Mrd.&thinsp;€). Größter Nettozahler vor Frankreich (−4,8) und Italien (−1,6 Mrd.&thinsp;€).</div>
+        <div class="callout">Wer entscheidet in Brüssel? <a href="#sec-staatsaufbau">Organigramm der EU-Institutionen</a> — Europäischer Rat, Kommission, Parlament, EZB/EIB.</div>
       </div>
     </div>
   </section>
@@ -1219,6 +1372,8 @@ svg .org-node{ fill:var(--paper); stroke:var(--line); }
   <!-- ======== VII · STROMVERBRAUCH & KI-RECHNER ======== -->
   <section class="phase" id="sec-vii">
     <div class="phase-tag"><span class="no">VII</span><h2>Stromverbrauch &amp; der KI-Rechner</h2><span class="cap">Erzeugung · Bedarf · Erneuerbare</span></div>
+
+    <div class="callout gold" style="grid-column:1/-1; margin-top:0;">Makro-Kontext: Strom- und Energiepreise hängen auch am Zinsumfeld — siehe <a href="#card-leitzins">Bundesbank/EZB-Leitzins 1999–2026</a> im Kapitel <a href="#sec-staat-politik">XIV Staat &amp; Politik</a>.</div>
 
     <div class="split">
       <div class="card k-red">
@@ -2006,6 +2161,66 @@ const S = {
   muted:"#66778f", line:"#ddd5c4", softRed:"#e8c9c2", softGreen:"#cfe0da"
 };
 
+/* ============================================================
+    PURE FUNKTIONEN — Bilanza-Kern (keine Seiteneffekte, testbar)
+    v2.3.0: an den Anfang verschoben (Fix TDZ-Initialisierung).
+    ============================================================ */
+const THEME_ORDER = ["papier","dunkel","kontrast","sepia","ozean","tanne","hochkontrast-hell","neutralgrau","solarized","solarized-dark"];
+const TEXT_SIZE_ORDER = ["s","m","l","xl"];
+const FONT_FAMILY_ORDER = ["sans","serif","lesen"];
+
+const resolveThemeName = rawValue => THEME_ORDER.includes(rawValue) ? rawValue : "papier";
+const resolveTextSize = rawValue => TEXT_SIZE_ORDER.includes(rawValue) ? rawValue : "m";
+const resolveFontFamily = rawValue => FONT_FAMILY_ORDER.includes(rawValue) ? rawValue : "sans";
+const resolveZoomPercent = rawValue => {
+  const parsed = Number.parseInt(rawValue, 10);
+  if (!Number.isFinite(parsed)) return 100;
+  return Math.min(150, Math.max(80, parsed));
+};
+const formatGermanInteger = value => {
+  if (!Number.isFinite(value)) return "–";
+  return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+const formatGermanDecimal = (value, decimals = 1) => {
+  if (!Number.isFinite(value)) return "–";
+  const fixedParts = value.toFixed(decimals).split(".");
+  const groupedInteger = fixedParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return fixedParts.length > 1 ? groupedInteger + "," + fixedParts[1] : groupedInteger;
+};
+const parseGermanNumber = text => {
+  const cleaned = String(text).replace(/[≈~><+]/g, "").replace(/ca\./g, "").trim();
+  const match = cleaned.match(/-?\d[\d.\s]*,?\d*/);
+  if (!match) return null;
+  const parsed = Number.parseFloat(match[0].replace(/\./g, "").replace(/\s/g, "").replace(",", "."));
+  return Number.isNaN(parsed) ? null : parsed;
+};
+const calculateDataCenterScenario = (itMegawatt, pueRatio) => {
+  const safeMegawatt = Number.isFinite(itMegawatt) ? Math.min(Math.max(itMegawatt, 0), 10000) : 0;
+  const safeRatio = Number.isFinite(pueRatio) ? Math.min(Math.max(pueRatio, 1), 3) : 1;
+  const totalMegawatt = safeMegawatt * safeRatio;
+  return { itMegawatt: safeMegawatt, pueRatio: safeRatio, totalMegawatt, annualTerawattHours: totalMegawatt * 8760 / 1e6 };
+};
+const calculateDataCenterEmissions = (annualTerawattHours, gramsPerKilowattHour) => {
+  if (!Number.isFinite(annualTerawattHours) || !Number.isFinite(gramsPerKilowattHour)) return 0;
+  return Math.max(0, annualTerawattHours) * Math.max(0, gramsPerKilowattHour) * 1000;
+};
+const escapeCsvCell = cell => {  const text = String(cell);
+  return /[;"\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+};
+const rowsToCsv = rows => rows.map(cells => cells.map(escapeCsvCell).join(";")).join("\n");
+const sanitizeSettingsImport = rawObject => {
+  if (!rawObject || typeof rawObject !== "object" || Array.isArray(rawObject)) return null;
+  return {
+    theme: resolveThemeName(rawObject.theme),
+    zoom: resolveZoomPercent(rawObject.zoom),
+    size: resolveTextSize(rawObject.size),
+    font: resolveFontFamily(rawObject.font)
+  };
+};
+const extractTableRows = tableElement => Array.from(tableElement.querySelectorAll("tr")).map(row =>
+  Array.from(row.querySelectorAll("th,td")).map(cell => cell.textContent.trim().replace(/\s+/g, " "))
+);
+
 function ns(t){ return document.createElementNS("http://www.w3.org/2000/svg", t); }
 function el(tag, attrs, parent){
   const n = ns(tag);
@@ -2632,7 +2847,7 @@ registerChart("box-flaechen-vergleich", ()=>flaechenVergleich("box-flaechen-verg
 // ============================================================
 // DUNKEL / KOMPAKT (Top-Navigation)
 // ============================================================
-const THEME_LABEL = {papier:"Papier",dunkel:"Dunkel",kontrast:"Kontrast",sepia:"Sepia",ozean:"Ozean",tanne:"Tanne"};
+const THEME_LABEL = {papier:"Papier",dunkel:"Dunkel",kontrast:"Kontrast",sepia:"Sepia",ozean:"Ozean",tanne:"Tanne","hochkontrast-hell":"HK-Hell",neutralgrau:"Grau",solarized:"Solarized","solarized-dark":"Sol-Dark"};
 const SIZE_LABEL = {s:"S",m:"M",l:"L",xl:"XL"};
 const FONT_LABEL = {sans:"Sans",serif:"Serif",lesen:"Lesen"};
 const readStoredSetting = key => { try { return window.localStorage.getItem(key); } catch (storageError) { return null; } };
@@ -2649,7 +2864,12 @@ function applyTheme(themeName){
 }
 function toggleTheme(){
   const nextIndex = (THEME_ORDER.indexOf(currentThemeName())+1)%THEME_ORDER.length;
-  applyTheme(THEME_ORDER[nextIndex]);
+  const nextTheme = THEME_ORDER[nextIndex];
+  if (typeof document.startViewTransition === "function") {
+    document.startViewTransition(()=>applyTheme(nextTheme));
+  } else {
+    applyTheme(nextTheme);
+  }
 }
 function currentZoomPercent(){ return resolveZoomPercent(readStoredSetting("bilanz.zoom")); }
 function applyZoom(percent){
@@ -2716,7 +2936,14 @@ const collectDisplaySettings = () => ({
   });
 })();
 (function initDisplayControls(){
-  document.querySelectorAll("[data-theme-btn]").forEach(btn=>btn.addEventListener("click", ()=>applyTheme(btn.getAttribute("data-theme-btn"))));
+  document.querySelectorAll("[data-theme-btn]").forEach(btn=>btn.addEventListener("click", ()=>{
+    const targetTheme = btn.getAttribute("data-theme-btn");
+    if (typeof document.startViewTransition === "function") {
+      document.startViewTransition(()=>applyTheme(targetTheme));
+    } else {
+      applyTheme(targetTheme);
+    }
+  }));
   document.querySelectorAll("[data-font-btn]").forEach(btn=>btn.addEventListener("click", ()=>applyFontFamily(btn.getAttribute("data-font-btn"))));
   const zoomOut = document.getElementById("btnZoomOut"), zoomIn = document.getElementById("btnZoomIn");
   if (zoomOut) zoomOut.addEventListener("click", ()=>stepZoom(-10));
@@ -2945,62 +3172,11 @@ if (!("IntersectionObserver" in window)) {
 
 /* ============================================================
     PURE FUNKTIONEN — Bilanza-Kern (keine Seiteneffekte, testbar)
+    Hinweis v2.3.0: Block wurde an den Anfang dieses Skripts
+    verschoben (direkt hinter die S-Palette), damit const-
+    Deklarationen vor den laufzeitgebundenen IIFEs initialisiert
+    sind (Fix: TDZ-Crash "Cannot access before initialization").
     ============================================================ */
-const THEME_ORDER = ["papier","dunkel","kontrast","sepia","ozean","tanne"];
-const TEXT_SIZE_ORDER = ["s","m","l","xl"];
-const FONT_FAMILY_ORDER = ["sans","serif","lesen"];
-
-const resolveThemeName = rawValue => THEME_ORDER.includes(rawValue) ? rawValue : "papier";
-const resolveTextSize = rawValue => TEXT_SIZE_ORDER.includes(rawValue) ? rawValue : "m";
-const resolveFontFamily = rawValue => FONT_FAMILY_ORDER.includes(rawValue) ? rawValue : "sans";
-const resolveZoomPercent = rawValue => {
-  const parsed = Number.parseInt(rawValue, 10);
-  if (!Number.isFinite(parsed)) return 100;
-  return Math.min(150, Math.max(80, parsed));
-};
-const formatGermanInteger = value => {
-  if (!Number.isFinite(value)) return "–";
-  return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
-const formatGermanDecimal = (value, decimals = 1) => {
-  if (!Number.isFinite(value)) return "–";
-  const fixedParts = value.toFixed(decimals).split(".");
-  const groupedInteger = fixedParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  return fixedParts.length > 1 ? groupedInteger + "," + fixedParts[1] : groupedInteger;
-};
-const parseGermanNumber = text => {
-  const cleaned = String(text).replace(/[≈~><+]/g, "").replace(/ca\./g, "").trim();
-  const match = cleaned.match(/-?\d[\d.\s]*,?\d*/);
-  if (!match) return null;
-  const parsed = Number.parseFloat(match[0].replace(/\./g, "").replace(/\s/g, "").replace(",", "."));
-  return Number.isNaN(parsed) ? null : parsed;
-};
-const calculateDataCenterScenario = (itMegawatt, pueRatio) => {
-  const safeMegawatt = Number.isFinite(itMegawatt) ? Math.min(Math.max(itMegawatt, 0), 10000) : 0;
-  const safeRatio = Number.isFinite(pueRatio) ? Math.min(Math.max(pueRatio, 1), 3) : 1;
-  const totalMegawatt = safeMegawatt * safeRatio;
-  return { itMegawatt: safeMegawatt, pueRatio: safeRatio, totalMegawatt, annualTerawattHours: totalMegawatt * 8760 / 1e6 };
-};
-const calculateDataCenterEmissions = (annualTerawattHours, gramsPerKilowattHour) => {
-  if (!Number.isFinite(annualTerawattHours) || !Number.isFinite(gramsPerKilowattHour)) return 0;
-  return Math.max(0, annualTerawattHours) * Math.max(0, gramsPerKilowattHour) * 1000;
-};
-const escapeCsvCell = cell => {  const text = String(cell);
-  return /[;"\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
-};
-const rowsToCsv = rows => rows.map(cells => cells.map(escapeCsvCell).join(";")).join("\n");
-const sanitizeSettingsImport = rawObject => {
-  if (!rawObject || typeof rawObject !== "object" || Array.isArray(rawObject)) return null;
-  return {
-    theme: resolveThemeName(rawObject.theme),
-    zoom: resolveZoomPercent(rawObject.zoom),
-    size: resolveTextSize(rawObject.size),
-    font: resolveFontFamily(rawObject.font)
-  };
-};
-const extractTableRows = tableElement => Array.from(tableElement.querySelectorAll("tr")).map(row =>
-  Array.from(row.querySelectorAll("th,td")).map(cell => cell.textContent.trim().replace(/\s+/g, " "))
-);
 
 /* ============================================================
     SELFTEST (?selftest) — Box-IDs + SVG-Render-Check
@@ -3120,12 +3296,15 @@ const extractTableRows = tableElement => Array.from(tableElement.querySelectorAl
      ============================================================ -->
 
 <section id="sec-history" class="card">
-  <h2>Historischer Vergleich 1981–2026</h2>
+  <h2>Historischer Vergleich 1981–2026 <span class="xref">46 Jahre · jährlich</span></h2>
   <div class="history-slider-container">
-    <input type="range" id="historySlider" min="0" max="8" value="7" step="1" />
-    <div id="historyDisplay"></div>
+    <input type="range" id="historySlider" min="0" max="45" value="45" step="1" aria-label="Jahr wählen (1981 bis 2026)" />
+    <div class="utl" id="historyTimeline" role="group" aria-label="Zeitleiste 1981 bis 2026 — Punkt pro Jahr"><div class="utl-progress" aria-hidden="true"></div></div>
+    <div id="historyDisplay" aria-live="polite"></div>
+    <div class="chart-cap">Haushalt (dunkel) vs. Steuereinnahmen (grün) · Mrd. €, nominal</div>
     <div id="historyChart"></div>
   </div>
+  <p class="src">Quelle: Destatis VGR, Bundesbank, BKB, BGBl. — 46 Jahre, Näherungswerte (nominal, Mrd. €); Schuldenstand vor 1990 nicht einheitlich erfasst (k. A.).</p>
 </section>
 
 <section id="taxCalc" class="card">
@@ -3167,9 +3346,163 @@ const extractTableRows = tableElement => Array.from(tableElement.querySelectorAl
   <div id="govTimeline"></div>
 </section>
 
+<div class="wrap">
+
+<!-- ======== XIV · STAAT & POLITIK ======== -->
+<section class="phase" id="sec-staat-politik">
+  <div class="phase-tag"><span class="no">XIV</span><h2>Staat &amp; Politik</h2><span class="cap">Sanktionen · Schuldenbremse · Zinsen · Rente · Länderfinanzen</span></div>
+
+  <div class="card k-red" id="card-sanktionen">
+    <h3>EU-Sanktions-Timeline gegen Russland <span class="xref">Pakete 6–21 · 2022–2026</span></h3>
+    <div class="sub">Nach den ersten fünf Paketen (02–04/2022) folgten bis Mitte 2026 <strong>16 weitere Sanktionspakete</strong> des Rates der EU — der Schwerpunkt verschob sich von Energie-Embargos über Technologie-Exportkontrollen zur Bekämpfung der „Schattenflotte“ und von Umgehungsgeschäften. Umfang-Angaben sind Näherungen des betroffenen Handels-/Finanzvolumens.</div>
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>Paket</th><th>Beschluss</th><th>Kernmaßnahmen</th><th>Umfang ≈</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="em">6.</td><td>06/2022</td><td>Rohöl-Embargo (See, ab 12/2022), SWIFT-Ausschluss Sberbank u. a., Sendeverbote staatlicher Medien</td><td>Energie ~20 Mrd. €/J.</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">7.</td><td>07/2022</td><td>Gold-Importverbot, „Erhaltung &amp; Angleichung“ (Schärfung ohne neue Felder)</td><td>Gold ~13 Mrd. €</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">8.</td><td>10/2022</td><td>Ölpreisobergrenze (G7-Mechanismus), Exportbann Stahl/Hightech, Listungen nach Scheinreferenden</td><td>Technologie ~7 Mrd. €</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">9.</td><td>12/2022</td><td>Drohnen-Motoren &amp; Dual-Use-Güter, ~200 Listungen, Sendeverbot NTV</td><td>Dual-Use ~5 Mrd. €</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">10.</td><td>02/2023</td><td>Exportverbot Elektronik, Spezialfahrzeuge, Maschinenteile; Asphalt &amp; Synthesekautschuk</td><td>Handel ~11 Mrd. €</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">11.</td><td>06/2023</td><td>Anti-Umgehungs-Instrument (Drittstaaten adressierbar), Transitverbot sensibler Güter</td><td>Kredit/Transit</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">12.</td><td>12/2023</td><td>Diamantenverbot (ab 01/2024, G7-Schnittstelle), „No-Russia-Klausel“ für Exporteure</td><td>Diamanten ~4 Mrd. €</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">13.</td><td>02/2024</td><td>~200 Listungen, erstmals Firmen aus CN/TR/IN wegen Drohnen-Komponenten</td><td>Technologie</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">14.</td><td>06/2024</td><td>LNG-Transitverbot (kein Importverbot), 116 Listungen, „best efforts“-Haftung für EU-Töchter</td><td>Energie (LNG)</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">15.</td><td>12/2024</td><td>Schattenflotte: ~50 Schiffe gebannt, Chemikalien &amp; Mikroelektronik, Anti-Umgehung</td><td>Flotte ~50 Schiffe</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">16.</td><td>02/2025</td><td>74 weitere Schattenflotten-Schiffe, Primäraluminium-Stopp, 13 Banken von SWIFT, 8 Medien</td><td>Kredit + Energie</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">17.</td><td>05/2025</td><td>~190 Schiffe (größtes Flotten-Paket), Hybrid-Bedrohungen, Menschenrechts-Listungen</td><td>Flotte ~190 Schiffe</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">18.</td><td>07/2025</td><td>Dynamischer Ölpreisdeckel (~15 % unter Markt), Nord-Stream-Transaktionsverbot, 105 Schiffe, 22 Banken</td><td>Energie + Kredit</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">19.</td><td>10/2025</td><td>LNG-Importverbot ab 2027, Rosneft/Lukoil-Transaktionsstopp, Krypto-Plattformen, 117 Schiffe</td><td>Energie ~12 Mrd. €</td><td><span class="status-active">genehmigt</span></td></tr>
+          <tr><td class="em">20.</td><td>04/2026</td><td>Raffinerie-Dienstleistungen &amp; weitere Flotten-Bannungen — nach Veto-Drohungen (HU/SK) abgespeckt</td><td>reduziert</td><td><span class="status-partial">blockiert/abgespeckt</span></td></tr>
+          <tr class="tot"><td class="em">21.</td><td>07/2026</td><td>Nachschärfung Energie &amp; Technologie, ~120 Listungen, Drittstaaten-Klausel II</td><td>~120 Listungen</td><td><span class="status-active">genehmigt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">Legende „Umfang“: <strong>Energie</strong> = betroffenes Import-/Exportvolumen p. a., <strong>Technologie</strong> = Exportkontroll-Listen, <strong>Kredit</strong> = Finanzsektor-/SWIFT-Maßnahmen, <strong>Flotte</strong> = gebannte Schiffe. Schätzungen auf Basis der EU-Ratsbeschlüsse.</div>
+    <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.consilium.europa.eu">Rat der EU (Sanktionsbeschlüsse)</a> / <a href="https://www.bafa.de">BAFA</a> / <a href="https://www.ihk.de">IHK Sanktions-Übersichten</a> — Stand 07/2026, illustrativ.</p>
+  </div>
+
+  <div class="split">
+    <div class="card k-gold" id="card-schuldenbremse">
+      <h3>Schuldenbremse — Geschichte <span class="xref">Art. 115 GG · 2009–2026</span></h3>
+      <div class="sub">Von der Verfassungsverankerung 2009 über die Corona-Aussetzung bis zur Reform 2025. Die Grafik zeigt Bundesausgaben (rot) gegen die zulässige strukturelle Nettokreditaufnahme von 0,35 % des BIP (grün) — Werte konsistent zur <a href="#sec-history">Historik 1981–2026</a> (illustrativ).</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Jahr</th><th>Ereignis</th></tr></thead>
+          <tbody>
+            <tr><td class="em">2009</td><td>Einführung: Art. 115 GG neu — strukturelle Neuverschuldung des Bundes max. 0,35 % des BIP (ab 2016)</td></tr>
+            <tr><td class="em">2010/2013</td><td>Übergang: Abbau des Krisen-Sonderergebnisses in Schritten (Art. 143d GG)</td></tr>
+            <tr><td class="em">2020–2022</td><td>Aussetzung per Notlagenklausel (Art. 115 Abs. 2 S. 6 GG): COVID-Hilfspakete &amp; Energiekrise, NKA je &gt; 100 Mrd. €</td></tr>
+            <tr><td class="em">2023/2024</td><td>Nachtragshaushalte; „Not-Aussetzung“ für KTF-Umwidmung (60 Mrd. €) — vom BVerfG kassiert</td></tr>
+            <tr><td class="em">2024-06</td><td>Wirkung des BVerfG-Urteils (15.11.2023, 2 BvR 2724/21): Haushaltslücke 60 Mrd. €, Sondervermögen-Reste gesperrt</td></tr>
+            <tr class="tot"><td class="em">2025/2026</td><td>Grundgesetzänderung 03/2025: Verteidigung &gt; 1 % BIP von der Bremse ausgenommen, 500-Mrd.-Sondervermögen Infrastruktur; Rückkehr zur Regelbremse verschoben</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chart-cap">Ausgaben (rot) vs. zulässige Nettokreditaufnahme 0,35 % BIP (grün) · Mrd. €</div>
+      <div class="chart-box" id="box-schuldenbremse" data-chart="schuldenbremse"></div>
+      <p style="margin-top:10px;"><button class="btn print-hide" type="button" id="btnDlgArt115">Art. 115 GG — Volltext (Dialog)</button></p>
+      <dialog id="dlg-example" aria-labelledby="dlg-example-title">
+        <h4 id="dlg-example-title">Art. 115 Abs. 2 GG — Kern der Schuldenbremse</h4>
+        <p style="font-size:.88rem;line-height:1.6;margin-top:6px;">„Einnahmen und Ausgaben sind grundsätzlich ohne Einbeziehung von Krediten auszugleichen.“ Bund und Ländern ist ein strukturelles Kreditlimit vorgegeben — für den Bund <strong>0,35 % des BIP</strong>. Abweichungen sind im Konjunkturverlauf symmetrisch auszugleichen (Kontrollkonto). Bei Naturkatastrophen oder außergewöhnlichen Notsituationen, die sich der Kontrolle des Staates entziehen und die staatliche Finanzlage erheblich beeinträchtigen, kann der Bundestag mit Mehrheit seiner Mitglieder die Kreditobergrenze überschreiten — verbunden mit einem Tilgungsplan.</p>
+        <form method="dialog"><button class="btn" value="close">Schließen</button></form>
+      </dialog>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.gesetze-im-internet.de">GG Art. 115 / Art. 143d</a>, BVerfG 15.11.2023, Bundeshaushaltsgesetze 2024–2026 — illustrativ.</p>
+    </div>
+
+    <div class="card k-green" id="card-leitzins">
+      <h3>Bundesbank / EZB-Leitzins <span class="xref">1999–2026 · Hauptrefinanzierungssatz</span></h3>
+      <div class="sub">Der Leitzins steuert die Refinanzierungskosten der Banken — und damit Kredite, Sparzinsen und letztlich die Zinslast des Bundes (siehe <a href="#sec-iii">Kapitel III</a>). Nach der Niedrigzinsphase 2016–2021 kehrte die EZB ab 2022 zur Restriktion zurück, seit 2024 läuft die Normalisierung.</div>
+      <bilanz-chart data-demo="leitzins">
+        <div class="chart-box" id="box-leitzins" data-chart="leitzins"></div>
+      </bilanz-chart>
+      <div class="callout gold"><strong>Taylor-Regel (Kurznotiz):</strong> i ≈ r* + π + 0,5·(π − π*) + 0,5·(Output-Lücke). Mit r* ≈ 1 % und Inflationsziel π* = 2 % ergab sich 2022/23 ein impliziter Zielzins deutlich über 4 % — die EZB folgte zeitverzögert; 2024–2026 normalisiert sich der Pfad Richtung „neutraler“ ~2–3 %.</div>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.ecb.europa.eu">EZB (Statistisches Data Warehouse)</a> / <a href="https://www.bundesbank.de">Bundesbank</a> — Werte gerundet/illustrativ.</p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="card k-gold" id="card-rente">
+      <h3>Rentenstruktur &amp; Demografie <span class="xref">Versicherte vs. Rentner · 1957–2026</span></h3>
+      <div class="sub">Das Umlageverfahren lebt vom Verhältnis Einzahler zu Empfängern — seit der Rentenreform 1957 („dynamische Rente“) hat sich die Belastung fast verdoppelt: von ~32 Rentnern je 100 Versicherte auf ~58.</div>
+      <div class="chart-cap">Versicherte (grün) vs. Rentner (gold) · in Mio.</div>
+      <div class="chart-box" id="box-renten" data-chart="renten"></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Jahr</th><th>Rentenwert (West)</th><th>Eckrente (45 EP)</th><th>Rentner je 100 Versicherte</th></tr></thead>
+          <tbody>
+            <tr><td class="em">1957</td><td>Einführung dynamische Rente</td><td>k. A.</td><td>~32</td></tr>
+            <tr><td class="em">1990</td><td>~24,0 DM</td><td>~1.080 DM</td><td>~48</td></tr>
+            <tr><td class="em">2014</td><td>28,61 €</td><td>~1.287 €</td><td>~56</td></tr>
+            <tr class="tot"><td class="em">2026</td><td>~40,8 €</td><td>~1.835 €</td><td>~58</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">Ein <strong>Rentenpunkt (Entgeltpunkt)</strong> entspricht einem Jahr Durchschnittsverdienst; 45 Punkte ergeben die „Eckrente“. Nachgelagerte Besteuerung für Neurentner seit 2023 bei 100 % — Bestandsschutz für Altrenten.</div>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.deutsche-rentenversicherung.de">DRV (Rentenwerte, Statistik)</a> / Destatis — gerundet/illustrativ.</p>
+    </div>
+
+    <div class="card k-green" id="card-laenderfinanz">
+      <h3>Länder-Finanzbeziehungen <span class="xref">Länderfinanzausgleich · Top-Geber/Empfänger</span></h3>
+      <div class="sub">Der horizontale Finanzausgleich verteilt zwischen den Ländern um; die vertikale Ebene (Bund ↔ Länder) läuft über den Steuerverbund (Art. 106 GG) und Bundesergänzungszuweisungen.</div>
+      <div class="chart-cap">LFA-Umlagen 2025 ≈ Mrd. € · Geber (grün) / Empfänger (rot)</div>
+      <div class="chart-box" id="box-laenderfinanz" data-chart="laenderfinanz"></div>
+      <div class="callout"><strong>Vertikal / Horizontal:</strong> Vertikal = Umsatzsteuer-Vorwegausgleich &amp; Bundesergänzungszuweisungen (~18 Mrd. €); horizontal = direkte Land-zu-Land-Umlage (~19 Mrd. € 2025). Bayern trägt etwa die Hälfte aller Geberleistungen.</div>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bundesfinanzministerium.de">BMF — Länderfinanzausgleich</a> / Statistik der Länderfinanzministerien — illustrativ.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== XV · STAATSAUFBAU & INSTITUTIONEN ======== -->
+<section class="phase" id="sec-staatsaufbau">
+  <div class="phase-tag"><span class="no">XV</span><h2>Staatsaufbau &amp; Institutionen</h2><span class="cap">Organigramme · Bund · Länder · EU · NATO · BMF</span></div>
+
+  <div class="card k-gold">
+    <h3>Organigramm: Bundesregierung 2026 <span class="xref">Kabinett Merz · Fokus BMF</span></h3>
+    <div class="sub">Kanzler → Ressorts: Das <strong>BMF</strong> unter Lars Klingbeil (SPD) bündelt Haushalt, Steuern und Finanzmarktpolitik; Vorgänger im Übergang 2024/25 war Jörg Kukies. Der Haushaltsausschuss des Bundestags beschließt den Etat (Mehrheit CDU/CSU + SPD: 328 von 630).</div>
+    <div class="chart-box" id="box-org-bundesregierung" data-chart="org-bundesregierung"></div>
+    <div class="callout gold">Der Bundesfinanzminister legt den Haushaltsentwurf vor, das Kabinett beschließt, der Bundestag verabschiedet — Kontrolle durch den Bundesrechnungshof.</div>
+    <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bundesregierung.de">bundesregierung.de (Kabinettsliste)</a> / <a href="https://www.bundestag.de">bundestag.de</a> — Stand 2026.</p>
+  </div>
+
+  <div class="card k-green">
+    <h3>Organigramm: Staatsaufbau <span class="xref">Bund → 16 Länder → Kreise → Gemeinden</span></h3>
+    <div class="sub">Föderalismus nach Art. 20/30 GG: 13 Flächenländer und 3 Stadtstaaten. <strong>Berlin</strong> ist zugleich Land und Kommune — gegliedert in 12 Bezirke, darunter <strong>Spandau</strong> mit eigener Bezirksverwaltung.</div>
+    <div class="chart-box" id="box-org-staatsaufbau" data-chart="org-staatsaufbau"></div>
+    <div class="callout">Kommunale Selbstverwaltung (Art. 28 GG): ~10.800 Gemeinden in ~294 Landkreisen; Stadtstaaten überspringen die Kreisebene.</div>
+    <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.destatis.de">Destatis (Gebietsstand)</a> / Grundgesetz — Stand 2026.</p>
+  </div>
+
+  <div class="card k-gold">
+    <h3>Organigramm: EU-Institutionen <span class="xref">Rat → Kommission → Parlament → EZB/EIB</span></h3>
+    <div class="sub">Der <strong>Europäische Rat</strong> setzt die Leitlinien, die <strong>Kommission</strong> (27 Kommissare, Generaldirektionen wie ECFIN/BUDG/ENER) führt aus, <strong>Parlament</strong> (720 Sitze) und <strong>Rat der EU</strong> beschließen Rechtsakte; <strong>EZB</strong> (Frankfurt) steuert die Geldpolitik der Eurozone, die <strong>EIB</strong> finanziert Investitionen.</div>
+    <div class="chart-box" id="box-org-eu" data-chart="org-eu"></div>
+    <div class="callout gold">Deutschland ist größter Nettozahler des EU-Haushalts (~13,1 Mrd. € 2024, siehe <a href="#sec-iv">Kapitel IV</a>) — und stellt mit der Bundesbank den größten Anteilseigner der EZB.</div>
+    <p class="src"><span class="term-source">Quelle:</span> <a href="https://europa.eu">europa.eu (Institutionen)</a> / EZB — Stand 2026.</p>
+  </div>
+
+  <div class="card k-red">
+    <h3>Organigramm: NATO-Struktur <span class="xref">NAC → SACEUR → deutsche Beiträge</span></h3>
+    <div class="sub">Politisch-militärische Befehlskette: <strong>Nordatlantikrat</strong> (NAC, Botschafterebene) → <strong>Militärausschuss</strong> (MC) → <strong>SACEUR</strong> (SHAPE, Mons) mit den Joint Force Commands; Deutschland stellt u. a. die ständige Brigade in Litauen (eFP-Nachfolge) und Korps-Führung in Ulm.</div>
+    <div class="chart-box" id="box-org-nato" data-chart="org-nato"></div>
+    <div class="callout">124,7 Mrd. € Verteidigungsausgaben 2026 (2,69 % BIP, siehe <a href="#sec-iv">Kapitel IV</a>) — Rang 2 im Bündnis hinter den USA.</div>
+    <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.nato.int">nato.int (Structure)</a> / BMVg — Stand 2026.</p>
+  </div>
+
+  <div class="card k-gold">
+    <h3>ProTip: Zuständigkeitsketten im BMF <span class="xref">Ressort → Referat → Prüfung → Treuhand</span></h3>
+    <div class="sub">Wer zeichnet frei, wer prüft, wer verwahrt? Die interne Kette des Bundesfinanzministeriums: Referat (Haushalt) → Zulassung → Prüfung nach § 23 BHO → Treuhand/Bundesvermögen (BImA, BVS).</div>
+    <div class="chart-box" id="box-org-bmf" data-chart="org-bmf"></div>
+    <div class="callout gold">ProTip: Jede Ausgabe braucht vorab die <em>Zulassung</em> (Verpflichtungsermächtigung) — die Prüfung erfolgt nachgelagert, die Vermögensverwaltung liegt bei BImA/BVS als Nachfolge der Treuhandanstalt.</div>
+    <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bundesfinanzministerium.de">BMF (Organisationsplan)</a> / BHO — illustrativ.</p>
+  </div>
+</section>
+
+</div>
+
 <section id="sec-vertraege-ru" class="card">
   <h2><span class="term-loaded">Verträge Deutschland–Russland</span> <span class="term-correction">Bilaterale Abkommen im Überblick</span></h2>
-  <p class="sub">15 bilaterale Abkommen und Instrumente zwischen Deutschland, der DDR und der UdSSR bzw. der Russischen Föderation — chronologisch, als aufklappbare Akkordeons mit Kurzzitat und einklappbarem Volltext. Der 2+4-Vertrag enthält alle zehn Artikel als Unter-Akkordeons. Status: <strong>September 2026</strong>. Quelle: Auswärtiges Amt, bpb, BGBl., UNCTAD IIA Navigator, WTO.</p>
+  <p class="sub">15 bilaterale Abkommen und Instrumente zwischen Deutschland, der DDR und der UdSSR bzw. der Russischen Föderation — chronologisch, als aufklappbare Akkordeons mit Kurzzitat und einklappbarem Volltext. Der 2+4-Vertrag enthält alle zehn Artikel als Unter-Akkordeons. Status: <strong>September 2026</strong>. Quelle: Auswärtiges Amt, bpb, BGBl., UNCTAD IIA Navigator, WTO. Ergänzend: <a href="#card-sanktionen">EU-Sanktionspakete 6–21 (2022–2026)</a> im Kapitel <a href="#sec-staat-politik">XIV Staat &amp; Politik</a>.</p>
   <div class="terminology-legend">
     <span><span class="swatch" style="background:#2e6e5e;"></span> In Kraft</span>
     <span><span class="swatch" style="background:#b9953f;"></span> Teilweise / formal</span>
@@ -3580,31 +3913,296 @@ function calcTax() {
   result.innerHTML = `Brutto: ${brutto.toFixed(0)} € | Netto: ${netto.toFixed(0)} € | Abgabenquote: ${abgabenquote}%`;
 }
 
-function initHistorySlider() { updateHistory(); }
-function updateHistory() {
-  const slider = document.getElementById('historySlider');
-  const display = document.getElementById('historyDisplay');
-  const chart = document.getElementById('historyChart');
-  if (!slider || !display || !chart) return;
-  const idx = parseInt(slider.value);
-  const histData = [
-    {year:1981, government:"Schmidt III", budget:268.5, taxes:231.0, deficit:-37.5, debt:1347.0, gdp:1957.0},
-    {year:1985, government:"Kohl I", budget:308.0, taxes:270.0, deficit:-38.0, debt:1638.0, gdp:2185.0},
-    {year:1990, government:"Kohl III", budget:380.0, taxes:330.0, deficit:-50.0, debt:2100.0, gdp:2830.0},
-    {year:1998, government:"Schröder I", budget:515.0, taxes:435.0, deficit:-80.0, debt:3750.0, gdp:4180.0},
-    {year:2005, government:"Merkel I", budget:600.0, taxes:495.0, deficit:-80.0, debt:4950.0, gdp:5280.0},
-    {year:2014, government:"Merkel III", budget:725.0, taxes:605.0, deficit:-20.0, debt:6450.0, gdp:7050.0},
-    {year:2020, government:"Merkel IV", budget:870.0, taxes:690.0, deficit:-158.0, debt:7300.0, gdp:7980.0},
-    {year:2025, government:"Merz", budget:502.6, taxes:377.6, deficit:-125.0, debt:8100.0, gdp:9700.0},
-    {year:2026, government:"Merz", budget:524.5, taxes:390.0, deficit:-135.0, debt:8300.0, gdp:10100.0}
-  ];
-  const d = histData[idx];
-  if (!d) return;
-  display.innerHTML = `<h3>${d.year} – ${d.government}</h3>
-    <p>Haushalt: ${d.budget} Mrd € | Steuern: ${d.taxes} Mrd € | Defizit: ${d.deficit} Mrd € | Schulden: ${d.debt} Mrd € | BIP: ${d.gdp} Mrd €</p>`;
-  if (window.barChart) {
-    barChart('historyChart', [{label:d.year.toString(), v1:d.budget, v2:d.taxes}], {colors:[S.ink,S.gold], keys:['v1','v2'], fmt:v=>v+' Mrd €'});
+/* ============================================================
+   HISTORIE 1981–2026 — 46 Jahre (Spiegel von data/history_1981_2026.json)
+   Felder: year, government, chancellor, fm, budget, taxes, deficit,
+   debt, gdp, inflation, unemployment, keyLaws, debtToGDP
+   ============================================================ */
+const HIST_DATA_46 = [
+  {year:1981, government:"Schmidt III (SPD/FDP)", chancellor:"Helmut Schmidt", fm:"Hans Apel (SPD)", budget:268.5, taxes:231.0, deficit:-37.5, debt:null, gdp:1957.0, inflation:6.3, unemployment:1.7, keyLaws:["Steueränderungsgesetz 1981"], debtToGDP:null},
+  {year:1982, government:"Kohl I (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Otto Graf Lambsdorff (FDP)", budget:278.0, taxes:235.0, deficit:-43.0, debt:null, gdp:2022.0, inflation:5.2, unemployment:3.2, keyLaws:["Steueränderungsgesetz 1982","Hartgesetz I"], debtToGDP:null},
+  {year:1983, government:"Kohl I (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Otto Graf Lambsdorff (FDP)", budget:289.5, taxes:242.0, deficit:-47.5, debt:null, gdp:2100.0, inflation:3.2, unemployment:4.1, keyLaws:["Hartgesetz II"], debtToGDP:null},
+  {year:1984, government:"Kohl I (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Otto Graf Lambsdorff (FDP)", budget:302.0, taxes:252.0, deficit:-50.0, debt:null, gdp:2180.0, inflation:2.7, unemployment:4.8, keyLaws:["Mäßigungspaket"], debtToGDP:null},
+  {year:1985, government:"Kohl II (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Gerhard Stoltenberg (CDU)", budget:315.0, taxes:260.0, deficit:-55.0, debt:null, gdp:2270.0, inflation:2.3, unemployment:5.5, keyLaws:["Steueränderungsgesetz 1985"], debtToGDP:null},
+  {year:1986, government:"Kohl II (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Gerhard Stoltenberg (CDU)", budget:328.0, taxes:270.0, deficit:-58.0, debt:null, gdp:2340.0, inflation:-0.1, unemployment:6.2, keyLaws:["Ökosteuergesetz (Planungen)"], debtToGDP:null},
+  {year:1987, government:"Kohl II (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Gerhard Stoltenberg (CDU)", budget:340.0, taxes:278.0, deficit:-62.0, debt:null, gdp:2410.0, inflation:0.3, unemployment:6.8, keyLaws:["Kreditwesengesetz-Novelle"], debtToGDP:null},
+  {year:1988, government:"Kohl III (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Gerhard Stoltenberg (CDU)", budget:355.0, taxes:290.0, deficit:-65.0, debt:null, gdp:2500.0, inflation:1.2, unemployment:7.4, keyLaws:["Steueränderungsgesetz 1988"], debtToGDP:null},
+  {year:1989, government:"Kohl III (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:372.0, taxes:302.0, deficit:-70.0, debt:null, gdp:2620.0, inflation:2.9, unemployment:7.9, keyLaws:["Wiedervereinigungsbilanz (Planungen)"], debtToGDP:null},
+  {year:1990, government:"Kohl III/IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:410.0, taxes:340.0, deficit:-70.0, debt:532.0, gdp:2900.0, inflation:2.7, unemployment:8.5, keyLaws:["Einigungsvertrag","Gemeinschaftsaufgabe"], debtToGDP:18.3},
+  {year:1991, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:450.0, taxes:370.0, deficit:-80.0, debt:620.0, gdp:3100.0, inflation:4.0, unemployment:9.2, keyLaws:["Sanierungsprogramm","Steueränderungsgesetz 1991"], debtToGDP:20.0},
+  {year:1992, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:485.0, taxes:398.0, deficit:-87.0, debt:720.0, gdp:3250.0, inflation:4.0, unemployment:10.1, keyLaws:["Stabilitätsprogramm 1992"], debtToGDP:22.2},
+  {year:1993, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:520.0, taxes:420.0, deficit:-100.0, debt:820.0, gdp:3350.0, inflation:3.5, unemployment:11.4, keyLaws:["Stabilitäts- und Wachstumsgesetz","Sanierung der Deutschen Bundesbahn"], debtToGDP:24.5},
+  {year:1994, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:545.0, taxes:435.0, deficit:-110.0, debt:920.0, gdp:3480.0, inflation:2.4, unemployment:12.2, keyLaws:["Steueränderungsgesetz 1994"], debtToGDP:26.4},
+  {year:1995, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:575.0, taxes:455.0, deficit:-120.0, debt:1030.0, gdp:3600.0, inflation:1.9, unemployment:13.0, keyLaws:["Bundesreorganisationsgesetz","Steueränderungsgesetz 1995"], debtToGDP:28.6},
+  {year:1996, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:590.0, taxes:465.0, deficit:-125.0, debt:1150.0, gdp:3720.0, inflation:1.5, unemployment:13.6, keyLaws:["Stabilitätsprogramm 1996"], debtToGDP:30.9},
+  {year:1997, government:"Kohl IV (CDU/CSU/FDP)", chancellor:"Helmut Kohl", fm:"Theo Waigel (CSU)", budget:605.0, taxes:472.0, deficit:-133.0, debt:1270.0, gdp:3850.0, inflation:1.4, unemployment:14.1, keyLaws:["Steueränderungsgesetz 1997","Euro-Einführung"], debtToGDP:33.0},
+  {year:1998, government:"Schröder I (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Oskar Lafontaine (SPD)", budget:620.0, taxes:480.0, deficit:-140.0, debt:1390.0, gdp:3980.0, inflation:1.0, unemployment:14.5, keyLaws:["Steueränderungsgesetz 1998","Ökosteuer"], debtToGDP:34.9},
+  {year:1999, government:"Schröder I (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Oskar Lafontaine (SPD) → Hans Eichel (SPD)", budget:640.0, taxes:492.0, deficit:-145.0, debt:1500.0, gdp:4090.0, inflation:0.6, unemployment:14.5, keyLaws:["Steueränderungsgesetz 1999","Agenda 2010 (Planungen)"], debtToGDP:36.7},
+  {year:2000, government:"Schröder I (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Hans Eichel (SPD)", budget:660.0, taxes:515.0, deficit:-130.0, debt:1590.0, gdp:4280.0, inflation:1.4, unemployment:14.3, keyLaws:["Steueränderungsgesetz 2000","Wachstumschancengesetz"], debtToGDP:37.2},
+  {year:2001, government:"Schröder I/II (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Hans Eichel (SPD)", budget:685.0, taxes:530.0, deficit:-145.0, debt:1700.0, gdp:4360.0, inflation:2.0, unemployment:14.9, keyLaws:["Steueränderungsgesetz 2001","Solidarpakt II","Wirtschaftsstabilisierungsgesetz"], debtToGDP:39.0},
+  {year:2002, government:"Schröder II (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Hans Eichel (SPD)", budget:700.0, taxes:540.0, deficit:-155.0, debt:1820.0, gdp:4440.0, inflation:1.3, unemployment:15.7, keyLaws:["Steueränderungsgesetz 2002","Hartz I"], debtToGDP:41.0},
+  {year:2003, government:"Schröder II (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Hans Eichel (SPD)", budget:715.0, taxes:548.0, deficit:-167.0, debt:1950.0, gdp:4520.0, inflation:1.4, unemployment:16.5, keyLaws:["Agenda 2010","Hartz II","Steueränderungsgesetz 2003"], debtToGDP:43.1},
+  {year:2004, government:"Schröder II (SPD/Grüne)", chancellor:"Gerhard Schröder", fm:"Hans Eichel (SPD)", budget:725.0, taxes:552.0, deficit:-173.0, debt:2070.0, gdp:4620.0, inflation:1.0, unemployment:17.1, keyLaws:["Hartz III","Steueränderungsgesetz 2004"], debtToGDP:44.8},
+  {year:2005, government:"Merkel I (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Peer Steinbrück (SPD)", budget:738.0, taxes:562.0, deficit:-170.0, debt:2180.0, gdp:4720.0, inflation:1.9, unemployment:17.6, keyLaws:["Hartz IV","Gesundheitspolitische Reform","Steueränderungsgesetz 2005"], debtToGDP:46.2},
+  {year:2006, government:"Merkel I (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Peer Steinbrück (SPD)", budget:755.0, taxes:578.0, deficit:-177.0, debt:2300.0, gdp:4900.0, inflation:1.8, unemployment:16.8, keyLaws:["Gesundheitsreform 2007 (Planungen)","Steuereinnahmen-Generalsanierung"], debtToGDP:46.9},
+  {year:2007, government:"Merkel I (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Peer Steinbrück (SPD)", budget:772.0, taxes:610.0, deficit:-162.0, debt:2380.0, gdp:5120.0, inflation:2.3, unemployment:15.5, keyLaws:["Gesundheitspolitische Reform 2007","Steueränderungsgesetz 2007"], debtToGDP:46.5},
+  {year:2008, government:"Merkel I (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Peer Steinbrück (SPD)", budget:790.0, taxes:635.0, deficit:-155.0, debt:2450.0, gdp:5330.0, inflation:2.8, unemployment:14.2, keyLaws:["Konjunkturpakete I/II (September)"], debtToGDP:46.0},
+  {year:2009, government:"Merkel II (CDU/CSU/FDP)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:810.0, taxes:630.0, deficit:-280.0, debt:2680.0, gdp:5440.0, inflation:0.4, unemployment:13.2, keyLaws:["Konjunkturpakete I/II","Steueränderungsgesetz 2009","Bilanzschirmverordnung"], debtToGDP:49.3},
+  {year:2010, government:"Merkel II (CDU/CSU/FDP)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:830.0, taxes:650.0, deficit:-255.0, debt:2880.0, gdp:5600.0, inflation:1.1, unemployment:12.0, keyLaws:["Schuldenbremse (Verfassungsrecht)","Fiskalpakt EU","Konjunkturbeihilfen"], debtToGDP:51.4},
+  {year:2011, government:"Merkel II (CDU/CSU/FDP)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:848.0, taxes:680.0, deficit:-220.0, debt:3050.0, gdp:5780.0, inflation:2.5, unemployment:11.0, keyLaws:["Fiskalpakt","Europäischer Stabilitätsmechanismus"], debtToGDP:52.8},
+  {year:2012, government:"Merkel II (CDU/CSU/FDP)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:860.0, taxes:700.0, deficit:-185.0, debt:3180.0, gdp:5900.0, inflation:2.0, unemployment:10.2, keyLaws:["Rettungsfonds EFSF","Bankenaufsicht EBA"], debtToGDP:53.9},
+  {year:2013, government:"Merkel III (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:875.0, taxes:718.0, deficit:-157.0, debt:3300.0, gdp:6020.0, inflation:1.5, unemployment:9.6, keyLaws:["Hartz-IV-Reform","Beteiligungsgesellschaften"], debtToGDP:54.8},
+  {year:2014, government:"Merkel III (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:890.0, taxes:738.0, deficit:-152.0, debt:3450.0, gdp:6180.0, inflation:0.9, unemployment:9.0, keyLaws:["Eckwerte des Haushaltsplans 2014","Schuldenbremse aktiviert"], debtToGDP:55.8},
+  {year:2015, government:"Merkel III (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:915.0, taxes:765.0, deficit:-150.0, debt:3600.0, gdp:6380.0, inflation:0.5, unemployment:8.3, keyLaws:["Flüchtlingskrise (2015)","Eckwerte 2015","Investitionsoffensive"], debtToGDP:56.4},
+  {year:2016, government:"Merkel III (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:940.0, taxes:790.0, deficit:-150.0, debt:3750.0, gdp:6580.0, inflation:0.4, unemployment:7.8, keyLaws:["Eckwerte 2016","Digitalpakt I (Planungen)"], debtToGDP:57.0},
+  {year:2017, government:"Merkel IV (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Wolfgang Schäuble (CDU)", budget:965.0, taxes:815.0, deficit:-150.0, debt:3900.0, gdp:6780.0, inflation:1.7, unemployment:7.2, keyLaws:["Eckwerte 2017","Koalitionsvertrag 2017"], debtToGDP:57.5},
+  {year:2018, government:"Merkel IV (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Olaf Scholz (SPD)", budget:990.0, taxes:845.0, deficit:-145.0, debt:4050.0, gdp:6980.0, inflation:1.9, unemployment:6.7, keyLaws:["Eckwerte 2018","Sondervermögen Bundeswehr (Planungen)"], debtToGDP:58.0},
+  {year:2019, government:"Merkel IV (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Olaf Scholz (SPD)", budget:1020.0, taxes:875.0, deficit:-140.0, debt:4200.0, gdp:7180.0, inflation:1.4, unemployment:6.0, keyLaws:["Eckwerte 2019","Klimaschutzprogramm 2030"], debtToGDP:58.5},
+  {year:2020, government:"Merkel IV (CDU/CSU/SPD)", chancellor:"Angela Merkel", fm:"Olaf Scholz (SPD)", budget:1085.0, taxes:830.0, deficit:-255.0, debt:4500.0, gdp:7280.0, inflation:0.4, unemployment:5.9, keyLaws:["Konjunkturpakete (Corona)","Wirtschaftsstabilisierungsgesetz","Übergewinnsteuer (Planungen)"], debtToGDP:61.8},
+  {year:2021, government:"Scholz (SPD/Grüne/FDP)", chancellor:"Olaf Scholz", fm:"Christian Lindner (FDP)", budget:1130.0, taxes:860.0, deficit:-350.0, debt:4900.0, gdp:7480.0, inflation:3.1, unemployment:5.6, keyLaws:["Konjunkturpakete III","Sondervermögen Bundeswehr (100 Mrd €)","Infrastrukturpaket"], debtToGDP:65.5},
+  {year:2022, government:"Scholz (SPD/Grüne/FDP)", chancellor:"Olaf Scholz", fm:"Christian Lindner (FDP)", budget:1180.0, taxes:880.0, deficit:-300.0, debt:5200.0, gdp:7700.0, inflation:8.7, unemployment:5.3, keyLaws:["Entlastungspakete (Energiekrise)","Übergewinnsteuer (Energieunternehmen)"], debtToGDP:67.5},
+  {year:2023, government:"Scholz (SPD/Grüne/FDP)", chancellor:"Olaf Scholz", fm:"Christian Lindner (FDP)", budget:1220.0, taxes:910.0, deficit:-280.0, debt:5400.0, gdp:7950.0, inflation:5.9, unemployment:5.5, keyLaws:["Wirtschaftsstabilisierungsgesetz 2023","Härtefallregelungen","Sondervermögen 2023"], debtToGDP:67.9},
+  {year:2024, government:"Merz (CDU/CSU/SPD)", chancellor:"Friedrich Merz", fm:"Jörg Kukies (CDU)", budget:1265.0, taxes:940.0, deficit:-325.0, debt:5670.0, gdp:8200.0, inflation:2.2, unemployment:5.8, keyLaws:["Schuldenbremse gekippt (Notfallhaushaltsgesetz)","Sondervermögen 2024","Wirtschaftsstabilisierungsgesetz"], debtToGDP:69.1},
+  {year:2025, government:"Merz (CDU/CSU/SPD)", chancellor:"Friedrich Merz", fm:"Jörg Kukies (CDU)", budget:1310.0, taxes:970.0, deficit:-340.0, debt:5900.0, gdp:8450.0, inflation:2.0, unemployment:6.0, keyLaws:["Haushaltsplan 2025","Sondervermögen Infrastruktur","Wirtschaftsstabilisierungsgesetz"], debtToGDP:69.8},
+  {year:2026, government:"Merz (CDU/CSU/SPD)", chancellor:"Friedrich Merz", fm:"Lars Klingbeil (SPD)", budget:1360.0, taxes:1000.0, deficit:-360.0, debt:6150.0, gdp:8700.0, inflation:2.2, unemployment:6.2, keyLaws:["Haushaltsplan 2026","Sondervermögen Infrastruktur","Wirtschaftsstabilisierungsgesetz 2026"], debtToGDP:70.7}
+];
+
+const histNF1 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 1 });
+const histNF0 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
+
+/* Unified Timeline: 46 Punkte auf horizontaler Achse (scroll-snap; fällt ohne animation-timeline sanft zurück) */
+function buildHistoryTimeline() {
+  const tl = document.getElementById("historyTimeline");
+  if (!tl || tl.dataset.built) return;
+  tl.dataset.built = "1";
+  HIST_DATA_46.forEach((d, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "utl-dot" + (d.year % 10 === 0 ? " decade" : "");
+    dot.setAttribute("data-year", d.year);
+    dot.title = d.year + " – " + d.government;
+    dot.setAttribute("aria-label", "Jahr " + d.year + " anzeigen");
+    dot.addEventListener("click", () => {
+      const slider = document.getElementById("historySlider");
+      if (slider) { slider.value = String(i); updateHistory(); }
+    });
+    tl.appendChild(dot);
+  });
+  let scrollTimer = null;
+  tl.addEventListener("scroll", () => {
+    if (scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const rect = tl.getBoundingClientRect();
+      const mid = rect.left + rect.width / 2;
+      let best = null, bestDist = Infinity;
+      tl.querySelectorAll(".utl-dot").forEach(dot => {
+        const r = dot.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - mid);
+        if (dist < bestDist) { bestDist = dist; best = dot; }
+      });
+      tl.querySelectorAll(".utl-dot.focus").forEach(dot => dot.classList.remove("focus"));
+      if (best) best.classList.add("focus");
+    }, 40);
+  }, { passive: true });
+}
+
+function initHistorySlider() {
+  const slider = document.getElementById("historySlider");
+  if (!slider) return;
+  slider.min = "0";
+  slider.max = String(HIST_DATA_46.length - 1);
+  buildHistoryTimeline();
+  if (!slider.dataset.bound) {
+    slider.dataset.bound = "1";
+    slider.addEventListener("input", updateHistory);
   }
+  updateHistory();
+}
+
+function updateHistory() {
+  const slider = document.getElementById("historySlider");
+  const display = document.getElementById("historyDisplay");
+  const chart = document.getElementById("historyChart");
+  if (!slider || !display || !chart) return;
+  const idx = Math.min(HIST_DATA_46.length - 1, Math.max(0, parseInt(slider.value, 10) || 0));
+  const d = HIST_DATA_46[idx];
+  if (!d) return;
+  const debtTxt = d.debt == null ? "k. A." : histNF0.format(d.debt) + " Mrd €";
+  const quoteTxt = d.debtToGDP == null ? "k. A." : histNF1.format(d.debtToGDP) + " %";
+  display.innerHTML =
+    '<h3>' + d.year + ' – ' + d.government + '</h3>' +
+    '<p class="hist-line"><strong>Kanzler:</strong> ' + d.chancellor + ' · <strong>Finanzminister:</strong> ' + d.fm + '</p>' +
+    '<p class="hist-line"><strong>Haushalt:</strong> ' + histNF1.format(d.budget) + ' Mrd € · <strong>Steuern:</strong> ' + histNF1.format(d.taxes) + ' Mrd € · <strong>Defizit:</strong> ' + histNF1.format(d.deficit) + ' Mrd € · <strong>Schulden:</strong> ' + debtTxt + ' (' + quoteTxt + ' des BIP) · <strong>BIP:</strong> ' + histNF0.format(d.gdp) + ' Mrd €</p>' +
+    '<p class="hist-line"><strong>Inflation:</strong> ' + histNF1.format(d.inflation) + ' % · <strong>Arbeitslosigkeit:</strong> ' + histNF1.format(d.unemployment) + ' %</p>' +
+    '<p class="hist-laws"><strong>Schlüsselgesetze:</strong> ' + d.keyLaws.join(' · ') + '</p>';
+  if (window.barChart) {
+    chart.innerHTML = "";
+    barChart("historyChart", [{ label: String(d.year), v1: d.budget, v2: d.taxes }], { colors: [S.ink, S.green], keys: ["v1", "v2"], fmt: v => histNF0.format(v) + " Mrd €" });
+  }
+  document.querySelectorAll("#historyTimeline .utl-dot").forEach((dot, i) => dot.classList.toggle("on", i === idx));
+}
+
+/* ============================================================
+   v2.3.0 — STAAT & POLITIK + STAATSAUFBAU: Charts & Organigramme
+   Registrierung mit Idempotenz-Wrapper (innerHTML-Clear), nutzt
+   die bestehende Lazy-Init-Infrastruktur aus Block 1.
+   ============================================================ */
+function regChartClear(boxId, drawFn) {
+  registerChart(boxId, () => { const b = document.getElementById(boxId); if (!b) return; b.innerHTML = ""; drawFn(); });
+}
+
+regChartClear("box-schuldenbremse", () => barChart("box-schuldenbremse", [
+  { label: "2009", v1: 810, v2: 19.0 }, { label: "2011", v1: 848, v2: 20.2 },
+  { label: "2013", v1: 875, v2: 21.1 }, { label: "2015", v1: 915, v2: 22.3 },
+  { label: "2017", v1: 965, v2: 23.7 }, { label: "2019", v1: 1020, v2: 25.1 },
+  { label: "2021", v1: 1130, v2: 26.2 }, { label: "2023", v1: 1220, v2: 27.8 },
+  { label: "2025", v1: 1310, v2: 29.6 }, { label: "2026", v1: 1360, v2: 30.5 }
+], { keys: ["v1", "v2"], colors: [S.red, S.green], fmt: v => Math.round(v) }));
+
+regChartClear("box-leitzins", () => lineChart("box-leitzins", [
+  { label: "1999", v: 2.5 }, { label: "2003", v: 2.0 }, { label: "2005", v: 2.25 },
+  { label: "2008", v: 4.25 }, { label: "2009", v: 1.0 }, { label: "2011", v: 2.0 },
+  { label: "2014", v: 0.05 }, { label: "2016", v: 0.0 }, { label: "2022", v: 3.75 },
+  { label: "2023", v: 4.5 }, { label: "2024", v: 4.25 }, { label: "2025", v: 4.0 },
+  { label: "2026", v: 3.75 }
+], { color: S.gold, fill: S.softGreen, min: -0.5, max: 5, fmt: v => v.toFixed(2).replace(".", ",") + " %" }));
+
+regChartClear("box-renten", () => barChart("box-renten", [
+  { label: "1957", v1: 20.5, v2: 6.5 }, { label: "1990", v1: 30.6, v2: 14.6 },
+  { label: "2014", v1: 37.4, v2: 21.1 }, { label: "2026", v1: 39.2, v2: 22.6 }
+], { keys: ["v1", "v2"], colors: [S.green, S.gold], max: 45, fmt: v => v.toFixed(1).replace(".", ",") + " Mio" }));
+
+regChartClear("box-laenderfinanz", () => hbarChart("box-laenderfinanz", [
+  { label: "Bayern (Geb.)", v: 9.8, hl: true, color: S.green },
+  { label: "Hessen (Geb.)", v: 4.3, hl: true, color: S.green },
+  { label: "BW (Geb.)", v: 3.9, color: S.green },
+  { label: "NRW (Geb.)", v: 0.5, color: S.green },
+  { label: "Sachsen (Empf.)", v: 4.6, hl: true, color: S.red },
+  { label: "Berlin (Empf.)", v: 3.9, color: S.red },
+  { label: "Thüringen (Empf.)", v: 1.7, color: S.red },
+  { label: "S.-Anhalt (Empf.)", v: 1.6, color: S.red },
+  { label: "Brandenburg (Empf.)", v: 1.4, color: S.red }
+], { max: 11, suffix: " Mrd €", fmt: komma }));
+
+regChartClear("box-org-bundesregierung", () => organigram("box-org-bundesregierung", {
+  name: "Bundeskanzler", sub: "Friedrich Merz (CDU) · seit 2025", top: true, children: [
+    { name: "Bundesfinanzminister", sub: "Lars Klingbeil (SPD) · ab 2026", hl: true, children: [
+      { name: "BMF · Abt. Bundeshaushalt", sub: "Haushaltsplan 2026", bw: 230 },
+      { name: "BMF · Abt. Steuer", sub: "Steuerschätzung", bw: 200 },
+      { name: "BMF · Abt. Finanzmarkt", sub: "Bundesbank-Dialog", bw: 210 }
+    ]},
+    { name: "Übergang 2024/25", sub: "Jörg Kukies (Finanzminister)", children: [
+      { name: "Haushalt 2024/25", sub: "Nachtragshaushalte", bw: 210 }
+    ]},
+    { name: "Bundestag", sub: "Haushaltsausschuss · 21. WP", children: [
+      { name: "Mehrheit: CDU/CSU + SPD", sub: "328 von 630 Sitzen", bw: 240 }
+    ]}
+  ]
+}));
+
+regChartClear("box-org-staatsaufbau", () => organigram("box-org-staatsaufbau", {
+  name: "Bundesrepublik Deutschland", sub: "Föderalismus · Art. 20/30 GG", top: true, children: [
+    { name: "Bundesebene", sub: "Regierung · Bundestag · Bundesrat", children: [
+      { name: "14 Bundesministerien", sub: "Ressorts", bw: 210 }
+    ]},
+    { name: "16 Bundesländer", sub: "Länderhoheit", hl: true, children: [
+      { name: "13 Flächenländer", sub: "teils Regierungsbezirke", children: [
+        { name: "~294 Landkreise", sub: "Landräte · Kreistage", bw: 210 }
+      ]},
+      { name: "3 Stadtstaaten", sub: "Berlin · Hamburg · Bremen", children: [
+        { name: "Berlin: 12 Bezirke", sub: "u. a. Spandau (Stadt + Land zugleich)", bw: 250 }
+      ]}
+    ]},
+    { name: "Kommunen", sub: "~10.800 Gemeinden · Art. 28 GG", children: [
+      { name: "Gemeindeverbände", sub: "Ämter · Samtgemeinden", bw: 220 }
+    ]}
+  ]
+}));
+
+regChartClear("box-org-eu", () => organigram("box-org-eu", {
+  name: "Europäische Union", sub: "27 Mitgliedstaaten · Vertrag von Lissabon", top: true, children: [
+    { name: "Europäischer Rat", sub: "Staats- & Regierungschefs", children: [
+      { name: "Eurogruppe", sub: "Finanzminister der Eurozone", bw: 220 }
+    ]},
+    { name: "EU-Kommission", sub: "Exekutive · 27 Kommissare", hl: true, children: [
+      { name: "DG ECFIN", sub: "Wirtschaft & Finanzen", bw: 190 },
+      { name: "DG BUDG", sub: "Haushalt", bw: 160 },
+      { name: "DG ENER", sub: "Energie", bw: 150 }
+    ]},
+    { name: "EU-Parlament", sub: "720 Abgeordnete · Straßburg", children: [
+      { name: "Rat der EU", sub: "Ministerrats-Formationen", bw: 210 }
+    ]},
+    { name: "EZB & EIB", sub: "Frankfurt · Lagarde", children: [
+      { name: "EZB-Rat", sub: "Leitzins-Entscheide", bw: 190 }
+    ]}
+  ]
+}));
+
+regChartClear("box-org-nato", () => organigram("box-org-nato", {
+  name: "NATO", sub: "32 Bündnispartner · Washington Treaty 1949", top: true, children: [
+    { name: "Nordatlantikrat (NAC)", sub: "oberstes politisches Gremium", children: [
+      { name: "Generalsekretär", sub: "Mark Rutte", bw: 180 }
+    ]},
+    { name: "Militärausschuss (MC)", sub: "höchstes militärisches Gremium", children: [
+      { name: "SACEUR / SHAPE", sub: "Oberkommando Europa (US-General)", hl: true, children: [
+        { name: "JFC Brunssum", sub: "Korps-Führung DE (Ulm)", bw: 220 },
+        { name: "DE-Beiträge", sub: "Brigade Litauen · Div. 2027", bw: 230 }
+      ]}
+    ]}
+  ]
+}));
+
+regChartClear("box-org-bmf", () => organigram("box-org-bmf", {
+  name: "BMF", sub: "Bundesministerium der Finanzen", top: true, children: [
+    { name: "Zentralabteilung / Referat", sub: "Haushaltsreferat", children: [
+      { name: "Zulassungsstelle", sub: "Verpflichtungsermächtigungen", bw: 240 },
+      { name: "Prüfungsstelle", sub: "§ 23 BHO · Ausgabeprüfung", bw: 230 }
+    ]},
+    { name: "Bundesvermögen", sub: "Treuhandverwaltung", children: [
+      { name: "BImA", sub: "Bundesanstalt für Immobilienaufgaben", bw: 270 },
+      { name: "BVS", sub: "Treuhand-Nachfolge (Abwicklung)", bw: 230 }
+    ]}
+  ]
+}));
+
+/* Sicherheits-Netz: eigene Observer, falls Block-1-Lazy-Init bereits gelaufen ist */
+function initStaatPolitikExtras() {
+  const ids = ["box-schuldenbremse", "box-leitzins", "box-renten", "box-laenderfinanz",
+    "box-org-bundesregierung", "box-org-staatsaufbau", "box-org-eu", "box-org-nato", "box-org-bmf"];
+  ids.forEach(id => {
+    const b = document.getElementById(id);
+    if (!b || b.querySelector("svg") || !chartInitFns[id]) return;
+    if ("IntersectionObserver" in window) {
+      const obs = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { chartInitFns[id](); obs.disconnect(); } });
+      }, { threshold: 0.1 });
+      obs.observe(b);
+    } else {
+      chartInitFns[id]();
+    }
+  });
+  /* Dialog: Art. 115 GG Volltext (ARIA-freundlich, Fallback ohne showModal) */
+  const btn = document.getElementById("btnDlgArt115");
+  const dlg = document.getElementById("dlg-example");
+  if (btn && dlg) {
+    btn.addEventListener("click", () => {
+      if (typeof dlg.showModal === "function") dlg.showModal();
+      else dlg.setAttribute("open", "");
+    });
+    dlg.addEventListener("click", e => {
+      if (e.target === dlg && typeof dlg.close === "function") dlg.close();
+    });
+  }
+}
+
+/* Web Component <bilanz-chart> (Migrations-Demo; kein Shadow DOM, Fallback = plain div) */
+if (window.customElements && !customElements.get("bilanz-chart")) {
+  customElements.define("bilanz-chart", class BilanzChart extends HTMLElement {
+    connectedCallback() {
+      this.style.display = "block";
+      if (!this.hasAttribute("data-upgraded")) this.setAttribute("data-upgraded", "1");
+    }
+  });
 }
 
 function initEuComparison() {
@@ -3982,7 +4580,7 @@ function runSelftest() {
   const vertraegeSec = document.getElementById('sec-vertraege-ru');
   results.push({name:'Verträge DE–RU', pass: !!vertraegeSec});
   const treatyAccs = vertraegeSec ? vertraegeSec.querySelectorAll('.treaty-accordion') : [];
-  results.push({name:'Vertrags-Accordions (13)', pass: treatyAccs.length >= 13, detail: treatyAccs.length + ' Accordions'});
+  results.push({name:'Vertrags-Accordions (15)', pass: treatyAccs.length >= 15, detail: treatyAccs.length + ' Accordions'});
   results.push({name:'Dark-Mode', pass: document.documentElement.getAttribute('data-theme') !== null});
   const svgWithTitle = document.querySelector('svg title');
   results.push({name:'SVG-Accessibility', pass: !!svgWithTitle});
@@ -4005,6 +4603,21 @@ function runSelftest() {
   results.push({name:'Code-Splitting', pass: typeof sectionObserver !== 'undefined' });
   results.push({name:'Keyboard Shortcuts', pass: typeof document.addEventListener === 'function' }); // basic check
   results.push({name:'PWA Manifest', pass: !!document.querySelector('link[rel="manifest"]') });
+  // v2.3.0 checks: XIV Staat & Politik, XV Staatsaufbau, 46-Jahre-Timeline, 10 Themes, Dialog, Web Component
+  const staatSec = document.getElementById('sec-staat-politik');
+  results.push({name:'XIV Staat & Politik', pass: !!staatSec});
+  const staatBoxes = ['box-schuldenbremse','box-leitzins','box-renten','box-laenderfinanz'].filter(id => !!document.getElementById(id));
+  results.push({name:'Staat-Charts (4)', pass: staatBoxes.length >= 4, detail: staatBoxes.length + '/4'});
+  const aufbauSec = document.getElementById('sec-staatsaufbau');
+  results.push({name:'XV Staatsaufbau', pass: !!aufbauSec});
+  const orgBoxes = ['box-org-bundesregierung','box-org-staatsaufbau','box-org-eu','box-org-nato','box-org-bmf'].filter(id => !!document.getElementById(id));
+  results.push({name:'Organigramme (5)', pass: orgBoxes.length >= 5, detail: orgBoxes.length + '/5'});
+  results.push({name:'HIST 46 Jahre', pass: (typeof HIST_DATA_46 !== 'undefined') && HIST_DATA_46.length === 46, detail: (typeof HIST_DATA_46 !== 'undefined') ? HIST_DATA_46.length + ' Jahre' : 'fehlt'});
+  const tlDots = document.querySelectorAll('#historyTimeline .utl-dot');
+  results.push({name:'Timeline-Dots (46)', pass: tlDots.length >= 46, detail: tlDots.length + ' Dots'});
+  results.push({name:'10 Themes', pass: (typeof THEME_ORDER !== 'undefined') && THEME_ORDER.length >= 10, detail: (typeof THEME_ORDER !== 'undefined') ? THEME_ORDER.length + ' Themes' : '?'});
+  results.push({name:'Art.115-Dialog', pass: !!document.getElementById('dlg-example')});
+  results.push({name:'bilanz-chart CE', pass: !!(window.customElements && customElements.get('bilanz-chart'))});
   const passed = results.filter(r=>r.pass).length;
   const total = results.length;
   console.log(`[SelfTest] ${passed}/${total} bestanden`);
@@ -4017,13 +4630,15 @@ function init() {
   if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {
       initEuComparison();
+      initHistorySlider();
+      initStaatPolitikExtras();
       initGovernmentTimeline();
       initVertraegeRU();
       highlightLoadedTerms();
       fetchDataUpdates();
     });
   } else {
-    setTimeout(() => { initEuComparison(); initGovernmentTimeline(); initVertraegeRU(); }, 1000);
+    setTimeout(() => { initEuComparison(); initHistorySlider(); initStaatPolitikExtras(); initGovernmentTimeline(); initVertraegeRU(); }, 1000);
   }
   runSelftest();
   console.log('[Bilanz] Datenvalidierung:', validateData());

@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## [2.3.0] - 2026-09-11
+### Added
+- Neues Kapitel XIV „Staat & Politik" (Sanktions-Timeline Pakete 6–21, Schuldenbremse 2009–2026, EZB-Leitzins 1999–2026, Rentenstruktur, Länderfinanzausgleich) + Inline-Verweise aus III/IV/VII/Verträge
+- 46-Jahre-Timeline 1981–2026: History-Slider über alle 46 Jahre einzeln (HIST_DATA_46, Intl.NumberFormat de-DE, Scroll-Dot-Navigation)
+- Neues Kapitel XV „Staatsaufbau": 5 Organigramme (Bundesregierung, Bund→Länder→Gemeinden, EU, NATO, BMF-Ketten) + Inline-Links
+- 4 neue Themes = 10 total (hochkontrast-hell, neutralgrau, solarized, solarized-dark), voll verdrahtet (THEME_ORDER, Labels, Buttons, Sanitizer)
+- Web Component `<bilanz-chart>` (Custom Element, kein Shadow DOM, Fallback)
+- CSS: `:has()`-Varianten, `color-mix()`-Hover (mit @supports-Fallback), `text-wrap: balance`
+- `<dialog>` für Art. 115 GG Volltext (mit Fallback)
+- View Transitions beim Theme-Wechsel (mit Fallback)
+- Speculation Rules für interne Anker
+- Selftest: 9 neue Checks (XIV/XV, 4 Staat-Charts, 5 Organigramme, HIST-46, Timeline-Dots, 10 Themes, Dialog, Custom Element)
+
+### Fixed
+- Selftest-Label Vertrags-Accordions (13) → (15)
+
 ## [2.2.0] - 2026-09-11
 ### Added
 - Variable Fonts (Inter, Source Serif 4) mit Typografie-Skala
