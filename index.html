@@ -258,6 +258,25 @@ td.em{ font-weight:700; }
 .treaty-stats{display:flex;gap:12px;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin:8px 0 0;flex-wrap:wrap}
 .treaty-stats b{color:var(--ink)}
 
+/* ---------- Verträge: Timeline, Deep-Link, Highlight, Print ---------- */
+.treaty-timeline{width:100%;height:auto;margin:6px 0 4px;display:block}
+.treaty-timeline .tl-year{font-family:var(--mono);font-size:.58rem;fill:var(--muted)}
+.treaty-timeline .tl-dot{cursor:pointer;stroke:var(--paper);stroke-width:1.5;transition:transform .12s}
+.treaty-timeline .tl-dot:hover{transform:scale(1.35)}
+.treaty-timeline .tl-line{stroke:var(--line);stroke-width:1}
+.tl-legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:.66rem;color:var(--muted);margin:2px 0 10px}
+.tl-legend .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.treaty-link-btn{background:none;border:none;cursor:pointer;font-size:.8rem;opacity:0;padding:2px 4px;border-radius:3px;flex-shrink:0;transition:opacity .15s,background .15s;color:var(--ink-soft)}
+.treaty-accordion summary:hover .treaty-link-btn,.treaty-accordion[open] summary .treaty-link-btn{opacity:1}
+.treaty-link-btn:hover{background:var(--paper-2);color:var(--gold)}
+mark.search-hl{background:var(--gold);color:var(--ink);padding:0 1px;border-radius:2px;font-weight:700}
+.treaty-accordion.search-hit{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.treaty-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+@media print{
+  .treaty-timeline,.tl-legend,.treaty-link-btn,#vertraege-search,.pills,.treaty-actions{display:none !important}
+  .treaty-accordion{break-inside:avoid;page-break-inside:avoid}
+}
+
 /* ---------- Hero: Der Kipphebel ---------- */
 .hero{
   padding:36px 0 30px;
@@ -3680,8 +3699,111 @@ function initVertraegeRU() {
   const container = document.getElementById('sec-vertraege-ru');
   if (!container) return;
   const accs = Array.from(container.querySelectorAll('.treaty-accordion'));
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const STATUS_COLOR = { active: '#2e6e5e', partial: '#b9953f', suspended: '#c0392b', terminated: '#999' };
 
-  // Status-Filter
+  // ---------- Deep-Linking: stabile IDs + Copy-Link-Buttons ----------
+  function slugify(s) {
+    return (s || '').toLowerCase()
+      .replace(/[äÄ]/g, 'ae').replace(/[öÖ]/g, 'oe').replace(/[üÜ]/g, 'ue').replace(/ß/g, 'ss')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 28);
+  }
+  accs.forEach(acc => {
+    if (!acc.id) {
+      const year = acc.getAttribute('data-year') || 'x';
+      const title = acc.querySelector('.treaty-title')?.textContent || 'vertrag';
+      acc.id = 'vertrag-' + year + '-' + slugify(title);
+    }
+    const summary = acc.querySelector('summary');
+    if (summary && !summary.querySelector('.treaty-link-btn')) {
+      const btn = document.createElement('button');
+      btn.className = 'treaty-link-btn';
+      btn.type = 'button';
+      btn.title = 'Direktlink kopieren';
+      btn.textContent = '🔗';
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = location.origin + location.pathname + '#' + acc.id;
+        (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+          .then(() => showShareToast('Direktlink kopiert'))
+          .catch(() => { try { window.prompt('Direktlink:', url); } catch (err) {} });
+      });
+      summary.appendChild(btn);
+    }
+  });
+  function openFromHash() {
+    const id = decodeURIComponent((location.hash || '').slice(1));
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (target && target.classList.contains('treaty-accordion')) {
+      target.open = true;
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    }
+  }
+
+  // ---------- Timeline (SVG) ----------
+  (function buildTimeline() {
+    const data = accs.map(acc => ({
+      acc,
+      year: parseInt(acc.getAttribute('data-year'), 10),
+      status: acc.getAttribute('data-status'),
+      title: acc.querySelector('.treaty-title')?.textContent || ''
+    })).filter(d => Number.isFinite(d.year));
+    if (!data.length) return;
+    const minY = Math.min(...data.map(d => d.year));
+    const maxY = Math.max(...data.map(d => d.year));
+    const W = 900, H = 64, PAD = 30, AXIS = 40;
+    const x = y => PAD + ((y - minY) / Math.max(1, maxY - minY)) * (W - 2 * PAD);
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('class', 'treaty-timeline');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Zeitleiste der bilateralen Verträge ' + minY + ' bis ' + maxY);
+    const axis = document.createElementNS(svgNS, 'line');
+    axis.setAttribute('x1', PAD); axis.setAttribute('x2', W - PAD);
+    axis.setAttribute('y1', AXIS); axis.setAttribute('y2', AXIS);
+    axis.setAttribute('class', 'tl-line');
+    svg.appendChild(axis);
+    for (let y = Math.ceil(minY / 10) * 10; y <= maxY; y += 10) {
+      const tick = document.createElementNS(svgNS, 'line');
+      tick.setAttribute('x1', x(y)); tick.setAttribute('x2', x(y));
+      tick.setAttribute('y1', AXIS - 4); tick.setAttribute('y2', AXIS + 4);
+      tick.setAttribute('class', 'tl-line');
+      svg.appendChild(tick);
+      const label = document.createElementNS(svgNS, 'text');
+      label.setAttribute('x', x(y)); label.setAttribute('y', AXIS + 16);
+      label.setAttribute('text-anchor', 'middle'); label.setAttribute('class', 'tl-year');
+      label.textContent = y;
+      svg.appendChild(label);
+    }
+    data.forEach(d => {
+      const dot = document.createElementNS(svgNS, 'circle');
+      dot.setAttribute('cx', x(d.year)); dot.setAttribute('cy', AXIS);
+      dot.setAttribute('r', 7); dot.setAttribute('class', 'tl-dot');
+      dot.setAttribute('fill', STATUS_COLOR[d.status] || '#999');
+      const t = document.createElementNS(svgNS, 'title');
+      t.textContent = d.year + ' — ' + d.title;
+      dot.appendChild(t);
+      dot.addEventListener('click', () => {
+        d.acc.open = true;
+        d.acc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      svg.appendChild(dot);
+    });
+    const legend = document.createElement('div');
+    legend.className = 'tl-legend';
+    legend.innerHTML =
+      '<span><span class="sw" style="background:' + STATUS_COLOR.active + '"></span>In Kraft</span>' +
+      '<span><span class="sw" style="background:' + STATUS_COLOR.partial + '"></span>Teil/formal</span>' +
+      '<span><span class="sw" style="background:' + STATUS_COLOR.suspended + '"></span>Ausgesetzt</span>' +
+      '<span><span class="sw" style="background:' + STATUS_COLOR.terminated + '"></span>Beendet</span>';
+    const legendEl = container.querySelector('.terminology-legend');
+    if (legendEl) { legendEl.after(svg); svg.after(legend); }
+    else container.insertBefore(svg, container.firstChild);
+  })();
+
+  // ---------- Status-Filter ----------
   const statusFilter = document.createElement('div');
   statusFilter.className = 'pills';
   statusFilter.innerHTML =
@@ -3692,9 +3814,47 @@ function initVertraegeRU() {
     '<button class="pill vf vf-term" data-vf="term">⚠️ Beendet</button>';
   container.insertBefore(statusFilter, container.querySelector('.terminology-legend')?.nextSibling || container.firstChild);
 
+  // ---------- Search-Highlighting ----------
+  function clearHighlights() {
+    container.querySelectorAll('mark.search-hl').forEach(m => {
+      const p = m.parentNode;
+      if (p) { p.replaceChild(document.createTextNode(m.textContent), m); p.normalize(); }
+    });
+    container.querySelectorAll('.search-hit').forEach(el => el.classList.remove('search-hit'));
+  }
+  function highlightIn(acc, term) {
+    const walker = document.createTreeWalker(acc, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue || !node.nodeValue.toLowerCase().includes(term)) return NodeFilter.FILTER_REJECT;
+        const p = node.parentElement;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        const tag = p.tagName;
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    let n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      const idx = text.toLowerCase().indexOf(term);
+      if (idx === -1) return;
+      const mark = document.createElement('mark');
+      mark.className = 'search-hl';
+      mark.textContent = text.slice(idx, idx + term.length);
+      const frag = document.createDocumentFragment();
+      if (idx > 0) frag.appendChild(document.createTextNode(text.slice(0, idx)));
+      frag.appendChild(mark);
+      if (idx + term.length < text.length) frag.appendChild(document.createTextNode(text.slice(idx + term.length)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
   function applyFilter() {
     const active = statusFilter.querySelector('.vf-active')?.getAttribute('data-vf') || 'alle';
-    const term = (document.getElementById('vertraege-search')?.value || '').toLowerCase();
+    const term = (document.getElementById('vertraege-search')?.value || '').toLowerCase().trim();
+    clearHighlights();
     let visible = 0;
     accs.forEach(acc => {
       const status = acc.getAttribute('data-status');
@@ -3706,7 +3866,10 @@ function initVertraegeRU() {
       if (active === 'term' && status !== 'terminated') show = false;
       if (term && !text.includes(term)) show = false;
       acc.classList.toggle('hidden-by-search', !show);
-      if (show) visible++;
+      if (show) {
+        visible++;
+        if (term) { highlightIn(acc, term); acc.classList.add('search-hit'); }
+      }
     });
     const stats = container.querySelector('.treaty-stats');
     if (stats) stats.innerHTML = `<span><b>${visible}</b> Verträge sichtbar</span>`;
@@ -3720,7 +3883,7 @@ function initVertraegeRU() {
     applyFilter();
   });
 
-  // Search input
+  // ---------- Search input ----------
   const searchInput = document.createElement('input');
   searchInput.id = 'vertraege-search';
   searchInput.type = 'search';
@@ -3728,13 +3891,27 @@ function initVertraegeRU() {
   statusFilter.insertAdjacentElement('afterend', searchInput);
   searchInput.addEventListener('input', applyFilter);
 
-  // Stats
+  // ---------- Stats ----------
   const stats = document.createElement('div');
   stats.className = 'treaty-stats';
   searchInput.insertAdjacentElement('afterend', stats);
-  applyFilter();
 
-  // Expand/Collapse all
+  // ---------- Aktionszeile: Alle öffnen / 2+4 / CSV ----------
+  const actions = document.createElement('div');
+  actions.className = 'treaty-actions';
+  stats.insertAdjacentElement('afterend', actions);
+
+  const expandAllBtn = document.createElement('button');
+  expandAllBtn.className = 'pill';
+  expandAllBtn.textContent = '⇕ Alle Verträge öffnen';
+  expandAllBtn.addEventListener('click', () => {
+    const willOpen = expandAllBtn.dataset.state !== 'open';
+    accs.forEach(a => { a.open = willOpen; });
+    expandAllBtn.dataset.state = willOpen ? 'open' : 'closed';
+    expandAllBtn.textContent = willOpen ? '⇕ Alle Verträge schließen' : '⇕ Alle Verträge öffnen';
+  });
+  actions.appendChild(expandAllBtn);
+
   const toggleBtn = document.createElement('button');
   toggleBtn.className = 'pill';
   toggleBtn.textContent = 'Alle 2+4-Artikel öffnen';
@@ -3742,13 +3919,12 @@ function initVertraegeRU() {
     const group = container.querySelector('.article-group');
     if (!group) return;
     const willOpen = toggleBtn.dataset.state !== 'open';
-    group.querySelectorAll('details').forEach(d => d.open = willOpen);
+    group.querySelectorAll('details').forEach(d => { d.open = willOpen; });
     toggleBtn.dataset.state = willOpen ? 'open' : 'closed';
-    toggleBtn.textContent = willOpen ? 'Alle schließen' : 'Alle öffnen';
+    toggleBtn.textContent = willOpen ? '2+4-Artikel schließen' : 'Alle 2+4-Artikel öffnen';
   });
-  searchInput.insertAdjacentElement('afterend', toggleBtn);
+  actions.appendChild(toggleBtn);
 
-  // CSV export
   const csvBtn = document.createElement('button');
   csvBtn.className = 'pill';
   csvBtn.textContent = '⬇ CSV-Export';
@@ -3769,7 +3945,16 @@ function initVertraegeRU() {
     a.download = 'bilanz-vertraege-de-ru.csv';
     a.click();
   });
-  toggleBtn.insertAdjacentElement('afterend', csvBtn);
+  actions.appendChild(csvBtn);
+
+  // ---------- Print: alle Details aufklappen ----------
+  window.addEventListener('beforeprint', () => {
+    container.querySelectorAll('details').forEach(d => { d.open = true; });
+  });
+
+  // ---------- Init ----------
+  applyFilter();
+  openFromHash();
 }
 
 function validateData() {
