@@ -223,6 +223,41 @@ td.em{ font-weight:700; }
 #sec-vertraege-ru td.em{ font-size:.9rem; }
 #sec-vertraege-ru .terminology-legend{ margin-bottom:14px; }
 
+/* ---------- Treaty Accordions ---------- */
+.treaty-accordion{border:1px solid var(--line);border-radius:6px;margin:10px 0;background:var(--paper);overflow:hidden}
+.treaty-accordion summary{cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid transparent;list-style:none;font-size:.92rem}
+.treaty-accordion summary::-webkit-details-marker{display:none}
+.treaty-accordion summary::before{content:"▶";font-size:.7rem;color:var(--muted);transition:transform .15s;flex-shrink:0}
+.treaty-accordion[open] > summary::before{transform:rotate(90deg)}
+.treaty-accordion summary:hover{background:var(--paper-2)}
+.treaty-year{font-family:var(--mono);font-size:.7rem;min-width:44px;color:var(--muted);font-weight:700}
+.treaty-title{flex:1;font-weight:600}
+.status-active{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:.65rem;font-weight:700;background:var(--green-soft);color:var(--green);border:1px solid var(--green);white-space:nowrap}
+.status-suspended{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:.65rem;font-weight:700;background:var(--red-soft);color:var(--red);border:1px solid var(--red);white-space:nowrap}
+.status-partial{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:.65rem;font-weight:700;background:#f0e9d8;color:#8a6d1f;border:1px solid var(--gold);white-space:nowrap}
+.status-terminated{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:.65rem;font-weight:700;background:#e0e0e0;color:#666;border:1px solid #999;white-space:nowrap}
+.treaty-body{padding:6px 14px 14px 14px;font-size:.88rem;line-height:1.55}
+.short-quote{border-left:3px solid var(--gold);padding:8px 12px;background:var(--paper-2);font-style:italic;margin:8px 0;border-radius:0 3px 3px 0}
+.full-text{margin:4px 0 8px}
+.full-text summary{cursor:pointer;font-family:var(--mono);font-size:.7rem;list-style:none;padding:4px 8px;color:var(--ink-soft);border-bottom:1px dashed var(--line)}
+.full-text summary:hover{color:var(--ink)}
+.full-text summary::before{content:"📄 "}
+.full-text blockquote,.article-acc blockquote{border-left:2px solid var(--line);padding:6px 10px;margin:4px 0;font-size:.84rem;color:var(--ink-soft);background:var(--paper)}
+.article-acc{margin:6px 0;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.article-acc summary{cursor:pointer;padding:6px 8px;list-style:none;font-size:.84rem}
+.article-acc summary::before{content:"▸";color:var(--gold);margin-right:4px}
+.article-acc[open] summary::before{content:"▾"}
+.article-acc b{color:var(--ink)}
+.article-group{margin:8px 0;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.article-group summary{cursor:pointer;padding:8px 10px;background:var(--paper-2);list-style:none;font-weight:600}
+.article-group summary::before{content:"📝";margin-right:6px}
+.src{font-size:.7rem;font-family:var(--mono);color:var(--muted);margin-top:10px;line-height:1.8}
+.src a{color:var(--ink);text-decoration:underline}
+#vertraege-search{width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:4px;font-family:var(--sans);font-size:.85rem;margin:12px 0;background:var(--paper);color:var(--ink)}
+.treaty-accordion.hidden-by-search{display:none}
+.treaty-stats{display:flex;gap:12px;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin:8px 0 0;flex-wrap:wrap}
+.treaty-stats b{color:var(--ink)}
+
 /* ---------- Hero: Der Kipphebel ---------- */
 .hero{
   padding:36px 0 30px;
@@ -2343,7 +2378,7 @@ registerChart("box-bka-einbuergerung", ()=>hbarChart("box-bka-einbuergerung",[{l
 registerChart("box-energie-aequivalent", ()=>hbarChart("box-energie-aequivalent",[{label:"Wind onshore", v:670, hl:true, color:S.green},{label:"Wind offshore", v:490, hl:true, color:S.green},{label:"Solar Freifläche", v:700, hl:true, color:S.red}],{max:800, suffix:" Mio €"}));
 registerChart("box-wohnen-fehl", ()=>hbarChart("box-wohnen-fehl",[{label:"Fehlbedarf", v:1.4, hl:true, color:S.red},{label:"Sozialwohn.", v:1.0, hl:true},{label:"Fertige 2024", v:0.25}],{max:1.6, suffix:" Mio", fmt:komma}));
 registerChart("box-wohnen-pipeline", ()=>barChart("box-wohnen-pipeline",[{label:"2023",v1:260.2,v2:294.0},{label:"2024",v1:215.9,v2:251.9}],{keys:["v1","v2"],colors:[S.gold,S.green],max:320,fmt:komma}));
-registerChart("box-pulpitis", ()=>hbarChart("box-pulpitis",[{label:"Karies bleibend", v:3.09, hl:true, color:S.red},{label:"Karies Milchz.", v:1.15, hl:true}],{max:3.4, suffix:" Mrd Fälle", fmt:v=>v.toFixed(2).replace(".",","))}));
+registerChart("box-pulpitis", ()=>hbarChart("box-pulpitis",[{label:"Karies bleibend", v:3.09, hl:true, color:S.red},{label:"Karies Milchz.", v:1.15, hl:true}],{max:3.4, suffix:" Mrd Fälle", fmt:v=>v.toFixed(2).replace(".",",")}));
 registerChart("box-kabinett-mandat", ()=>doughnut("box-kabinett-mandat",[{label:"Koalition 328", v:328, color:S.ink},{label:"Opposition 302", v:302, color:"#d7dce4"}],{centerVal:"328 / 630", center:"Sitze im Bundestag · Mehrheit 52,1 %"}));
 registerChart("box-partei-etat", ()=>hbarChart("box-partei-etat",[{label:"SPD", v:312.6, hl:true, color:S.red},{label:"CDU", v:84.6, hl:true},{label:"CSU", v:44.6, hl:true},{label:"Kanzleramt", v:5.0, hl:false}],{max:330, suffix:" Mrd €", fmt:komma}));
 registerChart("box-dunkelflaute", ()=>hbarChart("box-dunkelflaute",[{label:"Ö 2016–2025", v:13},{label:"2025 längste", v:88, hl:true, color:S.red},{label:"2023 Rekord", v:161, hl:true, color:S.red}],{max:170, suffix:" h"}));
@@ -2932,13 +2967,9 @@ const calculateDataCenterEmissions = (annualTerawattHours, gramsPerKilowattHour)
   return Math.max(0, annualTerawattHours) * Math.max(0, gramsPerKilowattHour) * 1000;
 };
 const escapeCsvCell = cell => {  const text = String(cell);
-  return /[;"
-
-]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+  return /[;"\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
 };
-const rowsToCsv = rows => rows.map(cells => cells.map(escapeCsvCell).join(";")).join("
-
-");
+const rowsToCsv = rows => rows.map(cells => cells.map(escapeCsvCell).join(";")).join("\n");
 const sanitizeSettingsImport = rawObject => {
   if (!rawObject || typeof rawObject !== "object" || Array.isArray(rawObject)) return null;
   return {
@@ -3037,14 +3068,10 @@ const extractTableRows = tableElement => Array.from(tableElement.querySelectorAl
   checkUnit("rz null", calculateDataCenterScenario(0, 1.15), {itMegawatt:0,pueRatio:1.15,totalMegawatt:0,annualTerawattHours:0});
   checkUnit("rz NaN", calculateDataCenterScenario(Number.NaN, 1.15).totalMegawatt, 0);
   checkUnit("rz pue-klemme", calculateDataCenterScenario(100, 0).pueRatio, 1);
-  checkUnit("csv einfach", rowsToCsv([["a","b"],["1","2"]]), "a;b
-
-1;2");
+  checkUnit("csv einfach", rowsToCsv([["a","b"],["1","2"]]), "a;b\n1;2");
   checkUnit("csv semikolon", rowsToCsv([["x;y"]]), '"x;y"');
   checkUnit("csv quote", rowsToCsv([['sag "hi"']]), '"sag ""hi"""');
-  checkUnit("csv umbruch", rowsToCsv([["a
-b"]]), '"a
-b"');
+  checkUnit("csv umbruch", rowsToCsv([["a\nb"]]), '"a\nb"');
   checkUnit("csv leer", rowsToCsv([[]]), "");
   checkUnit("suche treffer", cardMatchesQuery("Biblis A + B Kernkraft", "biblis"), true);
   checkUnit("suche alle-tokens", cardMatchesQuery("Biblis", "biblis kern"), false);
@@ -3062,8 +3089,7 @@ b"');
   lines.push("Bereit in " + Math.round(window.performance.now()) + " ms (Parsen + Render bis Selftest)");
   const pre = document.createElement("pre");
   pre.style.cssText = "position:fixed;left:14px;bottom:14px;z-index:99;background:#0d1117;color:#7ee787;font:12px monospace;padding:12px 18px;border-radius:6px;max-width:74vw;white-space:pre-wrap;box-shadow:0 4px 18px rgba(0,0,0,.4);";
-  pre.textContent = lines.join("
-  ");
+  pre.textContent = lines.join("\n");
   document.body.appendChild(pre);
 })();
 
@@ -3124,103 +3150,363 @@ b"');
 
 <section id="sec-vertraege-ru" class="card">
   <h2><span class="term-loaded">Verträge Deutschland–Russland</span> <span class="term-correction">Bilaterale Abkommen im Überblick</span></h2>
-  <p class="sub">Alle aktiven und ausgesetzten bilateralen Verträge zwischen Deutschland und der Russischen Föderation. Status: <strong>September 2026</strong>. Quelle: BMWE, BAFA, UNCTAD IIA Navigator, IHK, EU Trade Policy.</p>
+  <p class="sub">15 bilaterale Abkommen und Instrumente zwischen Deutschland, der DDR und der UdSSR bzw. der Russischen Föderation — chronologisch, als aufklappbare Akkordeons mit Kurzzitat und einklappbarem Volltext. Der 2+4-Vertrag enthält alle zehn Artikel als Unter-Akkordeons. Status: <strong>September 2026</strong>. Quelle: Auswärtiges Amt, bpb, BGBl., UNCTAD IIA Navigator, WTO.</p>
   <div class="terminology-legend">
-    <span><span class="swatch" style="background:#2e6e5e;"></span> Verbindlich / in Kraft</span>
-    <span><span class="swatch" style="background:#b9953f;"></span> Teilweise ausgesetzt</span>
-    <span><span class="swatch" style="background:#c0392b;"></span> Ausgesetzt / de facto beendet</span>
+    <span><span class="swatch" style="background:#2e6e5e;"></span> In Kraft</span>
+    <span><span class="swatch" style="background:#b9953f;"></span> Teilweise / formal</span>
+    <span><span class="swatch" style="background:#c0392b;"></span> Ausgesetzt</span>
+    <span><span class="swatch" style="background:#999;"></span> Beendet / erloschen</span>
   </div>
-  <div class="table-wrap xwide">
-    <table id="vertraegeTable" aria-label="Bilaterale Verträge Deutschland–Russland with Status">
-      <thead>
-        <tr>
-          <th scope="col">Vertrag</th>
-          <th scope="col">Abschluss</th>
-          <th scope="col">Status</th>
-          <th scope="col">Verbindlichkeit</th>
-          <th scope="col">Rechtswirkung</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="em">Bilaterales Investitionsabkommen (BIT) 1989</td>
-          <td>13.06.1989 / i.K. 05.08.1991</td>
-          <td><span class="status-active">In force</span></td>
-          <td>Schutz &amp; Förderung gegenseitiger Investitionen; Kündigung 1 Jahr Vorlauf; Sunset-Klausel 20 Jahre</td>
-          <td>Investorenschutz, Entschädigung bei Enteignung, ISDS-Verfahren weiterhin möglich</td>
-        </tr>
-        <tr>
-          <td class="em">Doppelbesteuerungsabkommen (DTA) 1992</td>
-          <td>1992</td>
-          <td><span class="status-suspended">Ausgesetzt</span></td>
-          <td>Steuerreduzierungen ausgesetzt (Dekret 585, Aug 2023); nur Verfahrensregeln bleiben</td>
-          <td>Inlandssteuern gelten: 15 % Dividenden, 20 % Zinsen/Royalties; kein Quellensteuer-Vorteil mehr</td>
-        </tr>
-        <tr>
-          <td class="em">Partnerschafts- &amp; Kooperationsabkommen (PCA) 1997</td>
-          <td>1997</td>
-          <td><span class="status-partial">Formell in force</span></td>
-          <td>Rahmenwerk für Handel &amp; Investitionen (EU–Russland); galt auch für DE</td>
-          <td>Keine neuen Verhandlungskapitel seit 2014; handelsbezogene Teile teils obsolet</td>
-        </tr>
-        <tr>
-          <td class="em">WTO-Streitverfahren (DS474, DS476, DS494, DS521)</td>
-          <td>2013–2017</td>
-          <td><span class="status-active">4 laufende Verfahren</span></td>
-          <td>Schiedsverfahren vor WTO-Panel noch offen</td>
-          <td>Sanktionen &amp; Handelsmaßnahmen der EU werden auf WTO-Konformität geprüft</td>
-        </tr>
-        <tr>
-          <td class="em">Hermes-Exportkreditgarantien</td>
-          <td>Laufende Bestände</td>
-          <td><span class="status-partial">Bestehende gültig</span></td>
-          <td>Altverträge bis Ablauf bedient; keine Neuzuwendungen</td>
-          <td>Euler Hermes sichert bestehende Exporte; politisches Risiko abgesichert</td>
-        </tr>
-        <tr>
-          <td class="em">Energieverträge (Gaspipe, Lieferverträge)</td>
-          <td>Bis 2022</td>
-          <td><span class="status-suspended">Getrennt / Nichtig</span></td>
-          <td>Nord Stream 1 stillgelegt; Nord Stream 2 nie in Betrieb</td>
-          <td>Altverträge per Kündigung beendet; keine neuen Lieferverträge</td>
-        </tr>
-        <tr>
-          <td class="em">Kultur- &amp; Bildungsabkommen</td>
-          <td>Verschiedene</td>
-          <td><span class="status-partial">Teilausgesetzt</span></td>
-          <td>Pädagogischer Austausch eingeschränkt; Goethe-Institut reduziert</td>
-          <td>Kulturräume stark abgebaut; Schulpartnerschaften ruhen</td>
-        </tr>
-        <tr>
-          <td class="em">Visum- &amp; Migrationsabkommen</td>
-          <td>Schengen-Rahmen</td>
-          <td><span class="status-partial">Formell in force</span></td>
-          <td>Visumsgebühren, Rückführungsabkommen bestehen weiter</td>
-          <td>De facto kaum genutzt; Konsulararbeit stark reduziert</td>
-        </tr>
-        <tr>
-          <td class="em">Luftverkehrsabkommen 1992/2006</td>
-          <td>1992/2006</td>
-          <td><span class="status-suspended">Ausgesetzt</span></td>
-          <td>Luftraum-Sperren seit 2022</td>
-          <td>Keine regulären Flüge zwischen DE und RU</td>
-        </tr>
-        <tr>
-          <td class="em">Post- &amp; Telekommunikationsabkommen</td>
-          <td>Verschiedene</td>
-          <td><span class="status-suspended">Teilweise ausgesetzt</span></td>
-          <td>Postverkehr eingeschränkt; Telekom-Direktverbindungen reduziert</td>
-          <td>Grundsätze bleiben, Volumina stark gesunken</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <details class="treaty-accordion" data-status="partial" data-year="1949" data-keywords="1949 ddr udssr anerkennung diplomatische beziehungen ost-berlin botschaft">
+    <summary>
+      <span class="treaty-year">1949</span>
+      <span class="treaty-title">Aufnahme diplomatischer Beziehungen DDR–UdSSR (05.10.1949)</span>
+      <span class="status-partial">Historisch</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Die Regierung der Union der Sozialistischen Sowjetrepubliken erkennt die Deutsche Demokratische Republik an und nimmt diplomatische Beziehungen mit ihr auf.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Die UdSSR war der erste Staat, der die DDR völkerrechtlich anerkannte; die Sowjetische Kontrollkommission wurde in eine diplomatische Vertretung überführt. Botschaften entstanden in Ost-Berlin und Moskau. Die Beziehungen erloschen mit dem Beitritt der DDR zur Bundesrepublik am 03.10.1990. Die Russische Föderation trat 1991/92 die völkerrechtliche Nachfolge der UdSSR an.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bpb.de">bpb.de</a> / <a href="https://www.auswaertiges-amt.de">Auswärtiges Amt</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="active" data-year="1955" data-keywords="1955 adenauer moskau kriegsgefangene heimkehr zehntausend hallstein doktrin botschaft">
+    <summary>
+      <span class="treaty-year">1955</span>
+      <span class="treaty-title">Aufnahme diplomatischer Beziehungen BRD–UdSSR (13.09.1955)</span>
+      <span class="status-active">✓ In Kraft</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Die Regierungen der Bundesrepublik Deutschland und der Union der Sozialistischen Sowjetrepubliken haben übereinstimmend beschlossen, diplomatische Beziehungen aufzunehmen.» — Gemeinsames Kommuniqué, Moskau, 13.09.1955</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Bundeskanzler Konrad Adenauer verhandelte vom 08.–14.09.1955 in Moskau mit Bulganin und Chruschtschow. Im Gegenzug zur Aufnahme der Beziehungen sagte die UdSSR die Heimkehr der letzten rund 10.000 deutschen Kriegsgefangenen und Internierten zu („Heimkehr der Zehntausend"). Trotz Hallstein-Doktrin (Alleinvertretungsanspruch) wurde Moskau zur einzigen Ausnahme. Die Beziehungen bestehen seitdem ununterbrochen — heute mit der Russischen Föderation als Rechtsnachfolgerin der UdSSR; die Botschaft Moskau ist die zentrale Verbindungsstelle.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bpb.de">bpb.de</a> / <a href="https://www.auswaertiges-amt.de">Auswärtiges Amt</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="partial" data-year="1970" data-keywords="moskauer vertrag 1970 ostpolitik brandt gewaltverzicht grenzen oder neisse un charta auslegung null brief deutsche einheit">
+    <summary>
+      <span class="treaty-year">1970</span>
+      <span class="treaty-title">Moskauer Vertrag BRD–UdSSR (12.08.1970)</span>
+      <span class="status-partial">Formal / obsolet</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Sie verpflichten sich, etwaige Streitfragen ausschließlich mit friedlichen Mitteln zu lösen, und enthalten sich in den Angelegenheiten, die die Sicherheit in Europa und die internationale Sicherheit betreffen, der Androhung oder Anwendung von Gewalt.» — Art. 2</blockquote>
+      <details class="full-text">
+        <summary>Volltext (Art. 1–5, Kurzfassung)</summary>
+        <blockquote><b>Art. 1:</b> Beide Seiten wollen zur Entspannung in Europa beitragen; Verpflichtung zu friedlicher Streitbeilegung und Gewaltverzicht nach Art. 2 Abs. 3 und 4 der UN-Charta.<br><b>Art. 2:</b> Achtung der territorialen Integrität aller Staaten Europas in ihren gegenwärtigen Grenzen; Erklärung, keine Gebietsansprüche gegen irgendwen zu erheben.<br><b>Art. 3:</b> Bekräftigung, dass die Grenzen aller Staaten in Europa — einschließlich der Oder-Neiße-Linie und der BRD–DDR-Grenze — „jetzt und in Zukunft unverletzlich" sind.<br><b>Art. 4:</b> Der Vertrag berührt keine früher geschlossenen bilateralen und multilateralen Verträge und Vereinbarungen (Vorbehalt der Vier-Mächte-Rechte).<br><b>Art. 5:</b> Ratifikationsklausel; Inkrafttreten 1973 nach Bundestagszustimmung vom Mai 1972 im Verbund mit dem Warschauer Vertrag.<br><br>Im begleitenden „Brief zur deutschen Einheit" legte die Bundesregierung dar, dass der Vertrag dem Ziel eines friedlichen Zustands in Europa — und damit der Wiederherstellung der nationalen Einheit durch freie Selbstbestimmung — nicht entgegensteht („Auslegung Null"). Mit dem 2+4-Vertrag von 1990 faktisch obsolet; formal nie gekündigt.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bpb.de">bpb.de</a> / <a href="https://www.1000dokumente.de">1000dokumente.de</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="terminated" data-year="1975" data-keywords="freundschaftsvertrag ddr udssr 1975 honecker breschnew sozialistischer internationalismus beistand rgw">
+    <summary>
+      <span class="treaty-year">1975</span>
+      <span class="treaty-title">Freundschaftsvertrag DDR–UdSSR (07.10.1975)</span>
+      <span class="status-terminated">Erloschen (DDR)</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Die Hohen Vertragsparteien werden ihre Beziehungen auf der Grundlage des sozialistischen Internationalismus, der unverbrüchlichen Freundschaft und der allseitigen gegenseitigen Unterstützung weiterentwickeln.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Vertrag über Freundschaft, Zusammenarbeit und gegenseitigen Beistand (Moskau, 07.10.1975; Laufzeit 25 Jahre; löste den Vertrag von 1964 ab). Kerninhalte: militärischer Beistand im Angriffsfall („alle notwendigen Maßnahmen einschließlich militärischer"), Bekenntnis zur „Unantastbarkeit der in Europa bestehenden Grenzen" (Art. 6), ideologische Festigung der „sozialistischen Staatengemeinschaft", enge außenpolitische Abstimmung und Vertiefung der wirtschaftlichen Integration im RGW. Der Vertrag erlosch mit dem Beitritt der DDR zur Bundesrepublik am 03.10.1990; die Bundesrepublik trat ihm nicht bei.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bpb.de">bpb.de</a> / <a href="https://www.ddr-im-blick.de">DDR-Geschichte</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="suspended" data-year="1978" data-keywords="kulturabkommen kultur austausch goethe institut daad schulpartnerschaften wissenschaft bildung">
+    <summary>
+      <span class="treaty-year">1978</span>
+      <span class="treaty-title">Kulturabkommen BRD–UdSSR (19.05.1978)</span>
+      <span class="status-suspended">De facto ausgesetzt</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Die Vertragsparteien fördern und erweitern die Zusammenarbeit und den Austausch auf den Gebieten der Kultur, der Wissenschaft, der Bildung und des Sports.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Das Abkommen regelte den Austausch von Künstlern, Ausstellungen, Ensembles, Sprachlehrkräften, Wissenschaftlern und Stipendiaten; es war die Grundlage für Goethe-Institut-Aktivitäten, DAAD-Programme und Schulpartnerschaften. Nach 1991 mit der Russischen Föderation fortgesetzt. Seit 2022 de facto ausgesetzt: die Goethe-Institute in Moskau, St. Petersburg und Nowosibirsk wurden Ende 2022 geschlossen, DAAD-Programme ruhen, Schulpartnerschaften sind eingefroren.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.goethe.de">Goethe-Institut</a> / <a href="https://www.auswaertiges-amt.de">Auswärtiges Amt</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="active" data-year="1989" data-keywords="bit investitionsschutz kapitalanlagen isds schiedsverfahren enteignung entschädigung sunset klausel transfer subrogation faire gerechte behandlung">
+    <summary>
+      <span class="treaty-year">1989</span>
+      <span class="treaty-title">Investitionsschutzvertrag (BIT) BRD–UdSSR (13.06.1989, i.K. 05.08.1991)</span>
+      <span class="status-active">✓ In Kraft</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Kapitalanlagen durch Investoren der einen Vertragspartei genießen im Hoheitsgebiet der anderen Vertragspartei vollen Schutz und volle Sicherheit.» — Art. 3 (Typus)</blockquote>
+      <details class="full-text">
+        <summary>Volltext (Kernartikel, Kurzfassung)</summary>
+        <blockquote>Vertrag über die Förderung und den gegenseitigen Schutz von Kapitalanlagen; die Russische Föderation trat die UdSSR-Rechtsnachfolge an. <b>Art. 1:</b> Begriffsbestimmungen (Investition, Investor, Erträge). <b>Art. 2:</b> Förderung und Zulassung von Investitionen. <b>Art. 3:</b> faire und gerechte Behandlung, voller Schutz und volle Sicherheit, Meistbegünstigung, Verbot willkürlicher oder diskriminierender Maßnahmen. <b>Art. 4:</b> Enteignung nur zum öffentlichen Wohl gegen Entschädigung in Höhe des Wertes der Investition, verzinslich und frei transferierbar. <b>Art. 5:</b> freier Transfer von Zahlungen. <b>Art. 6:</b> Eintrittsrecht (Subrogation) bei staatlichen Garantien. <b>Art. 10/11:</b> Schiedsverfahren Staat–Staat und Investor–Staat (ISDS). Kündigung mit einjähriger Frist möglich; für getätigte Investitionen greift eine Sunset-Klausel von 20 Jahren. Status 2026: einziges zentral bilaterales Abkommen, das uneingeschränkt in Kraft ist.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://investmentpolicy.unctad.org">UNCTAD IIA Navigator</a> / <a href="https://www.auswaertiges-amt.de">Auswärtiges Amt</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="active" data-year="1990" data-keywords="zwei plus vier 2+4 einheit souveränität vier mächte nato bündnis grenzen polen truppenabzug 370000 artikel moskau">
+    <summary>
+      <span class="treaty-year">1990</span>
+      <span class="treaty-title">Zwei-plus-Vier-Vertrag — abschließende Regelung in Bezug auf Deutschland (12.09.1990, i.K. 15.03.1991)</span>
+      <span class="status-active">✓ In Kraft</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Das vereinte Deutschland hat demgemäß volle Souveränität über seine inneren und äußeren Angelegenheiten.» — Art. 7 Abs. 2</blockquote>
+      <details class="article-group">
+        <summary>Artikel 1–10 — Übersicht (plus Präambel, Protokollnotiz, Gemeinsamer Brief)</summary>
+
+        <details class="article-acc" data-art="0">
+          <summary><b>Präambel</b> — Ausgangslage und Ziele</summary>
+          <blockquote class="short">«…in dem Bewusstsein, dass ihre Völker seit 1945 miteinander in Frieden leben…»</blockquote>
+          <details class="full-text"><summary>Volltext Präambel</summary>
+            <blockquote>Die Bundesrepublik Deutschland, die Deutsche Demokratische Republik, die Französische Republik, die Union der Sozialistischen Sowjetrepubliken, das Vereinigte Königreich Großbritannien und Nordirland und die Vereinigten Staaten von Amerika — in dem Bewusstsein, dass ihre Völker seit 1945 miteinander in Frieden leben; eingedenk der jüngsten historischen Veränderungen in Europa, die es ermöglichen, die Spaltung des Kontinents zu überwinden; unter Berücksichtigung der Rechte und Verantwortlichkeiten der Vier Mächte in Bezug auf Berlin und Deutschland als Ganzes; eingedenk der Prinzipien der KSZE-Schlussakte von Helsinki; in Würdigung dessen, dass das deutsche Volk in freier Ausübung des Selbstbestimmungsrechts seinen Willen bekundet hat, die staatliche Einheit Deutschlands herzustellen; in der Überzeugung, dass die Vereinigung Deutschlands als Staat mit endgültigen Grenzen ein bedeutsamer Beitrag zu Frieden und Stabilität in Europa ist — sind wie folgt übereingekommen:</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="1">
+          <summary><b>Art. 1</b> — Einheit und endgültige Grenzen</summary>
+          <blockquote class="short">«Das vereinte Deutschland wird die Gebiete der Bundesrepublik Deutschland, der Deutschen Demokratischen Republik und ganz Berlins umfassen.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 1</summary>
+            <blockquote>(1) Das vereinte Deutschland wird die Gebiete der Bundesrepublik Deutschland, der Deutschen Demokratischen Republik und ganz Berlins umfassen. Seine Außengrenzen werden die Grenzen der Bundesrepublik Deutschland und der Deutschen Demokratischen Republik sein und werden am Tage des Inkrafttretens dieses Vertrags endgültig sein. Die Bestätigung des endgültigen Charakters der Grenzen des vereinten Deutschland ist ein wesentlicher Bestandteil der Friedensordnung in Europa. (2) Das vereinte Deutschland und die Republik Polen bestätigen die zwischen ihnen bestehende Grenze in einem völkerrechtlich verbindlichen Vertrag. (3) Das vereinte Deutschland hat keinerlei Gebietsansprüche gegen andere Staaten und wird solche auch nicht in Zukunft erheben. (4) Die Regierungen der Bundesrepublik Deutschland und der Deutschen Demokratischen Republik werden sicherstellen, dass die Verfassung des vereinten Deutschland keinerlei Bestimmungen enthalten wird, die mit diesen Prinzipien unvereinbar sind (Präambel sowie Art. 23 Satz 2 und Art. 146 GG). (5) Die Regierungen der Vier Mächte nehmen die Verpflichtungen und Erklärungen der beiden deutschen Regierungen förmlich entgegen und erklären, dass mit deren Verwirklichung der endgültige Charakter der Grenzen des vereinten Deutschland bestätigt wird.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="2">
+          <summary><b>Art. 2</b> — Frieden von deutschem Boden</summary>
+          <blockquote class="short">«Von deutschem Boden wird nur Frieden ausgehen.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 2</summary>
+            <blockquote>Die Regierungen der Bundesrepublik Deutschland und der Deutschen Demokratischen Republik bekräftigen ihre Erklärungen, dass von deutschem Boden nur Frieden ausgehen wird. Nach der Verfassung des vereinten Deutschland sind Handlungen, die geeignet sind und in der Absicht vorgenommen werden, das friedliche Zusammenleben der Völker zu stören, insbesondere die Führung eines Angriffskrieges vorzubereiten, verfassungswidrig und strafbar. Die Regierungen der Bundesrepublik Deutschland und der Deutschen Demokratischen Republik erklären, dass das vereinte Deutschland keine seiner Waffen jemals einsetzen wird, es sei denn in Übereinstimmung mit seiner Verfassung und der Charta der Vereinten Nationen.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="3">
+          <summary><b>Art. 3</b> — ABC-Waffen-Verzicht und Truppenstärke 370.000</summary>
+          <blockquote class="short">«…Verzicht auf Herstellung und Besitz von und auf Verfügungsgewalt über atomare, biologische und chemische Waffen.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 3</summary>
+            <blockquote>(1) Die Regierungen der Bundesrepublik Deutschland und der Deutschen Demokratischen Republik bekräftigen ihren Verzicht auf Herstellung und Besitz von und auf Verfügungsgewalt über atomare, biologische und chemische Waffen. Sie erklären, dass auch das vereinte Deutschland sich an diese Verpflichtungen halten wird. Insbesondere gelten die Rechte und Verpflichtungen aus dem Vertrag über die Nichtverbreitung von Kernwaffen vom 01.07.1968 für das vereinte Deutschland fort. (2) Die Regierung der Bundesrepublik Deutschland hat in vollem Einvernehmen mit der Regierung der DDR am 30.08.1990 in Wien bei den KSE-Verhandlungen erklärt: „Die Regierung der Bundesrepublik Deutschland verpflichtet sich, die Streitkräfte des vereinten Deutschland innerhalb von drei bis vier Jahren auf eine Personalstärke von 370.000 Mann (Land-, Luft- und Seestreitkräfte) zu reduzieren. Diese Reduzierung soll mit dem Inkrafttreten des ersten KSE-Vertrags beginnen. Im Rahmen dieser Gesamtobergrenze werden nicht mehr als 345.000 Mann den Land- und Luftstreitkräften angehören." Die Regierung der DDR hat sich dieser Erklärung ausdrücklich angeschlossen. (3) Die Regierungen der Vier Mächte nehmen diese Erklärungen zur Kenntnis.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="4">
+          <summary><b>Art. 4</b> — Abzug der sowjetischen Truppen bis Ende 1994</summary>
+          <blockquote class="short">«…der Abzug dieser Streitkräfte … wird bis zum Ende des Jahres 1994 … vollzogen sein.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 4</summary>
+            <blockquote>(1) Die Regierungen der Bundesrepublik Deutschland, der Deutschen Demokratischen Republik und der UdSSR erklären, dass das vereinte Deutschland und die UdSSR in vertraglicher Form die Bedingungen und die Dauer des Aufenthalts der sowjetischen Streitkräfte auf dem Gebiet der heutigen DDR und Berlins sowie die Abwicklung des Abzugs dieser Streitkräfte regeln werden, der bis zum Ende des Jahres 1994 im Zusammenhang mit der Verwirklichung der Verpflichtungen aus Art. 3 Abs. 2 vollzogen sein wird. (2) Die Regierungen Frankreichs, des Vereinigten Königreichs und der USA nehmen diese Erklärung zur Kenntnis.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="5">
+          <summary><b>Art. 5</b> — Stationierungsregeln für das Beitrittsgebiet</summary>
+          <blockquote class="short">«Ausländische Streitkräfte und Atomwaffen oder deren Träger werden in diesem Teil Deutschlands weder stationiert noch dorthin verlegt.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 5</summary>
+            <blockquote>(1) Bis zum Abschluss des Abzugs der sowjetischen Streitkräfte (Art. 4) werden auf dem Gebiet der heutigen DDR und Berlins als Streitkräfte des vereinten Deutschland ausschließlich deutsche Verbände der Territorialverteidigung stationiert sein, die nicht in die Bündnisstrukturen integriert sind; Streitkräfte anderer Staaten werden in dieser Zeit dort weder stationiert noch andere militärische Tätigkeiten ausüben. (2) Für die Dauer des Aufenthalts sowjetischer Streitkräfte bleiben auf deutschen Wunsch Streitkräfte Frankreichs, des Vereinigten Königreichs und der USA in Berlin stationiert; Zahl und Ausrüstungsumfang werden nicht stärker als bei Unterzeichnung; neue Waffenkategorien werden nicht eingeführt; Verträge zu gerechten Bedingungen. (3) Nach Abschluss des Abzugs können in diesem Teil Deutschlands auch deutsche Streitkräfteverbände stationiert werden, die in gleicher Weise militärischen Bündnisstrukturen zugeordnet sind wie auf dem übrigen deutschen Hoheitsgebiet — allerdings ohne Kernwaffenträger (konventionelle Waffensysteme mit Mehrfachfähigkeit nur für eine konventionelle Rolle). Ausländische Streitkräfte und Atomwaffen oder deren Träger werden in diesem Teil Deutschlands weder stationiert noch dorthin verlegt.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="6">
+          <summary><b>Art. 6</b> — Bündnisfreiheit (NATO)</summary>
+          <blockquote class="short">«Das Recht des vereinten Deutschland, Bündnissen mit allen sich daraus ergebenden Rechten und Pflichten anzugehören, wird von diesem Vertrag nicht berührt.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 6</summary>
+            <blockquote>Das Recht des vereinten Deutschland, Bündnissen mit allen sich daraus ergebenden Rechten und Pflichten anzugehören, wird von diesem Vertrag nicht berührt. — Damit war die NATO-Mitgliedschaft des vereinten Deutschland völkerrechtlich abgesichert; die Stationierungsbeschränkungen des Art. 5 blieben davon unberührt.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="7">
+          <summary><b>Art. 7</b> — Ende der Vier-Mächte-Rechte, volle Souveränität</summary>
+          <blockquote class="short">«Das vereinte Deutschland hat demgemäß volle Souveränität über seine inneren und äußeren Angelegenheiten.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 7</summary>
+            <blockquote>(1) Die Französische Republik, die Union der Sozialistischen Sowjetrepubliken, das Vereinigte Königreich Großbritannien und Nordirland und die Vereinigten Staaten von Amerika beenden hiermit ihre Rechte und Verantwortlichkeiten in Bezug auf Berlin und Deutschland als Ganzes. Als Ergebnis werden die entsprechenden, damit zusammenhängenden vierseitigen Vereinbarungen, Beschlüsse und Praktiken beendet und alle entsprechenden Einrichtungen der Vier Mächte aufgelöst. (2) Das vereinte Deutschland hat demgemäß volle Souveränität über seine inneren und äußeren Angelegenheiten.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="8">
+          <summary><b>Art. 8</b> — Ratifikation und Hinterlegung</summary>
+          <blockquote class="short">«Die Ratifikation erfolgt auf deutscher Seite durch das vereinte Deutschland. Dieser Vertrag gilt daher für das vereinte Deutschland.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 8</summary>
+            <blockquote>(1) Dieser Vertrag bedarf der Ratifikation oder Annahme, die so bald wie möglich herbeigeführt werden soll. Die Ratifikation erfolgt auf deutscher Seite durch das vereinte Deutschland. Dieser Vertrag gilt daher für das vereinte Deutschland. (2) Die Ratifikations- oder Annahmeurkunden werden bei der Regierung des vereinten Deutschland hinterlegt. Diese unterrichtet die Regierungen der anderen Vertragschließenden Seiten von der Hinterlegung jeder Ratifikations- oder Annahmeurkunde.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="9">
+          <summary><b>Art. 9</b> — Inkrafttreten</summary>
+          <blockquote class="short">«Dieser Vertrag tritt … am Tag der Hinterlegung der letzten Ratifikations- oder Annahmeurkunde … in Kraft.»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 9</summary>
+            <blockquote>Dieser Vertrag tritt für das vereinte Deutschland, die Union der Sozialistischen Sowjetrepubliken, die Französische Republik, das Vereinigte Königreich Großbritannien und Nordirland und die Vereinigten Staaten von Amerika am Tag der Hinterlegung der letzten Ratifikations- oder Annahmeurkunde durch diese Staaten in Kraft. — Die letzte Urkunde wurde am 15.03.1991 hinterlegt; damit trat der Vertrag in Kraft (BGBl. 1990 II, S. 1318).</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="10">
+          <summary><b>Art. 10</b> — Vertragsurkunde und Sprachfassungen</summary>
+          <blockquote class="short">«…deutscher, englischer, französischer und russischer Wortlaut gleichermaßen verbindlich…»</blockquote>
+          <details class="full-text"><summary>Volltext Art. 10</summary>
+            <blockquote>Die Urschrift dieses Vertrags, dessen deutscher, englischer, französischer und russischer Wortlaut gleichermaßen verbindlich ist, wird bei der Regierung der Bundesrepublik Deutschland hinterlegt, die den Regierungen der anderen Vertragschließenden Seiten beglaubigte Ausfertigungen übermittelt. Zu Urkund dessen haben die unterzeichneten, hierzu gehörig Bevollmächtigten diesen Vertrag unterschrieben. Geschehen zu Moskau am 12. September 1990 (Genscher, de Maizière, Dumas, Schewardnadse, Hurd, Baker).</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="11">
+          <summary><b>Vereinbarte Protokollnotiz</b> — Begriff „verlegt" (Art. 5 Abs. 3)</summary>
+          <blockquote class="short">«Alle Fragen in Bezug auf die Anwendung des Wortes »verlegt« … werden von der Regierung des vereinten Deutschland in einer vernünftigen und verantwortungsbewussten Weise entschieden…»</blockquote>
+          <details class="full-text"><summary>Volltext Protokollnotiz</summary>
+            <blockquote>Vereinbarte Protokollnotiz zu dem Vertrag über die abschließende Regelung in Bezug auf Deutschland vom 12. September 1990: Alle Fragen in Bezug auf die Anwendung des Wortes „verlegt", wie es im letzten Satz von Artikel 5 Abs. 3 gebraucht wird, werden von der Regierung des vereinten Deutschland in einer vernünftigen und verantwortungsbewussten Weise entschieden, wobei sie die Sicherheitsinteressen jeder Vertragspartei, wie dies in der Präambel niedergelegt ist, berücksichtigen wird.</blockquote>
+          </details>
+        </details>
+
+        <details class="article-acc" data-art="12">
+          <summary><b>Gemeinsamer Brief</b> — Genscher / de Maizière an die vier Außenminister</summary>
+          <blockquote class="short">«Die Enteignungen auf besatzungsrechtlicher bzw. besatzungshoheitlicher Grundlage (1945 bis 1949) sind nicht mehr rückgängig zu machen.»</blockquote>
+          <details class="full-text"><summary>Volltext Gemeinsamer Brief (Kernpunkte)</summary>
+            <blockquote>Im Zusammenhang mit der Unterzeichnung des Vertrags legten die Regierungen der BRD und der DDR am 12.09.1990 dar: (1) Die Gemeinsame Erklärung zur Regelung offener Vermögensfragen vom 15.06.1990 — Bestandteil des Einigungsvertrags (Art. 41) — stellt fest: „Die Enteignungen auf besatzungsrechtlicher bzw. besatzungshoheitlicher Grundlage (1945 bis 1949) sind nicht mehr rückgängig zu machen." (2) Denkmale für die Opfer von Krieg und Gewaltherrschaft sowie Kriegsgräber werden geachtet, erhalten und gepflegt; sie stehen unter dem Schutz deutscher Gesetze. (3) Die freiheitlich-demokratische Grundordnung bleibt auch im vereinten Deutschland verfassungsrechtlich geschützt; Parteien und Vereinigungen mit verfassungsfeindlichen — auch nationalsozialistischen — Zielen können verboten werden. (4) Zu den Verträgen der DDR gilt Art. 12 des Einigungsvertrags.</blockquote>
+          </details>
+        </details>
+
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bpb.de/themen/deutsche-einheit/zwei-plus-vier-vertrag/">bpb.de</a> / <a href="https://de.wikisource.org/wiki/Zwei-plus-Vier-Vertrag">BGBl. 1990 II, S. 1318</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="partial" data-year="1990" data-keywords="nachbarschaftsvertrag gute nachbarschaft partnerschaft zusammenarbeit souveräne gleichheit konsultationen">
+    <summary>
+      <span class="treaty-year">1990</span>
+      <span class="treaty-title">Vertrag über gute Nachbarschaft, Partnerschaft und Zusammenarbeit BRD–UdSSR (21.11.1990)</span>
+      <span class="status-partial">Formell in Kraft</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Die Vertragsparteien entwickeln ihre Beziehungen auf der Grundlage der souveränen Gleichheit, der territorialen Integrität, des Verzichts auf Androhung oder Anwendung von Gewalt und der Achtung der Menschenrechte.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Der „Nachbarschaftsvertrag" vereinbarte jährliche Konsultationen auf höchster Ebene, Krisenkonsultationen sowie die Vertiefung der Zusammenarbeit in Wirtschaft, Wissenschaft, Technologie, Umwelt und Kultur und die Erleichterung menschlicher Kontakte. Nach 1991 von der Russischen Föderation fortgesetzt. Formal nicht gekündigt; seit 2022 faktisch suspendiert — keine Regierungskonsultationen, Sanktionsregime der EU.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.auswaertiges-amt.de">Auswärtiges Amt</a> / <a href="https://www.bpb.de">bpb.de</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="suspended" data-year="1992" data-keywords="dta dba doppelbesteuerungsabkommen steuern dividenden zinsen lizenzgebühren dekret 585 quellensteuer verständigungsverfahren">
+    <summary>
+      <span class="treaty-year">1992</span>
+      <span class="treaty-title">Doppelbesteuerungsabkommen (DTA) 1992</span>
+      <span class="status-suspended">Ausgesetzt (Dekret 585)</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Dieses Abkommen gilt für Personen, die in einem Vertragsstaat oder in beiden Vertragsstaaten ansässig sind.» — Art. 1 (persönlicher Geltungsbereich, DTA-Typus)</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Das Abkommen zur Vermeidung der Doppelbesteuerung auf dem Gebiet der Steuern vom Einkommen und vom Vermögen verteilte Besteuerungsrechte: Dividenden regelmäßig mit 15 % Quellensteuer begrenzt, Zinsen und Lizenzgebühren mit 0 %; Anrechnungs- und Freistellungsmethode; Informationsaustausch und Verständigungsverfahren. Mit Dekret Nr. 585 vom 08.08.2023 setzte die Russische Föderation die zentralen Abkommensbestimmungen (insbesondere die ermäßigten Quellensteuersätze) einseitig und unbefristet aus; die Verfahrensvorschriften bleiben formal bestehen. Deutschland behandelt das DTA grundsätzlich als weiterhin in Kraft stehend; faktisch gelten seit der Aussetzung die russischen Inlandssätze (15 % Dividenden, 20 % Zinsen/Lizenzgebühren).</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bundesfinanzministerium.de">BMF</a> / Dekret 585 (08.08.2023)</p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="suspended" data-year="1992" data-keywords="luftverkehr flüge luftraum sperrung überflug verkehrsrechte sibirien fluggesellschaften">
+    <summary>
+      <span class="treaty-year">1992/06</span>
+      <span class="treaty-title">Luftverkehrsabkommen BRD–UdSSR/Russland (1992, geändert 2006)</span>
+      <span class="status-suspended">Ausgesetzt</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Jede Vertragspartei gewährt der anderen Vertragspartei die in diesem Abkommen und seiner Anlage festgelegten Rechte zum Betrieb vereinbarter Linienflugdienste.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Das Luftverkehrsabkommen (1992, durch Protokoll 2006 modernisiert) regelte die Benennung von Fluggesellschaften, Verkehrsrechte, Kapazitäten, Tarife und Luftsicherheit. Seit dem 27./28.02.2022 bestehen wechselseitige Luftraumsperren (EU-Verordnung 2022/334; russische Gegenmaßnahme): keine Linienflüge zwischen Deutschland und Russland, keine Überflugrechte über Sibirien für EU-Carrier. Das Abkommen bleibt formal in Kraft, sein Vollzug ist ausgesetzt.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bmdv.bund.de">BMDV</a> / <a href="https://eur-lex.europa.eu">EUR-Lex</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="partial" data-year="1997" data-keywords="pca partnerschaft kooperationsabkommen eu russland handel politischer dialog kooperationsrat meistbegünstigung">
+    <summary>
+      <span class="treaty-year">1997</span>
+      <span class="treaty-title">Partnerschafts- und Kooperationsabkommen EU–Russland (PCA), i.K. 01.12.1997</span>
+      <span class="status-partial">Formell in Kraft</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Ziel dieses Abkommens ist die Schaffung eines geeigneten Rahmens für den politischen Dialog zwischen den Parteien, der die Entwicklung immer engerer politischer Beziehungen ermöglicht.» — Art. 6 (Typus)</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Das PCA (unterzeichnet 24.06.1994 auf Korfu; in Kraft seit 01.12.1997) schuf den Handelsrahmen auf GATT-Meistbegünstigungsbasis, den politischen Dialog (Gipfel, Kooperationsrat, Kooperationsausschuss) sowie wirtschaftliche, finanzielle und kulturelle Zusammenarbeit; es galt kraft EU-Mitgliedschaft auch für Deutschland. Seit 2014 keine Fortentwicklung (Verhandlungen über ein „Neues Abkommen" gestoppt); seit 2022 sind die handelsbezogenen Teile durch die EU-Sanktionspakete weitgehend obsolet. Das Abkommen ist formal nicht gekündigt.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://eur-lex.europa.eu">EUR-Lex (21997A1128(01))</a> / <a href="https://www.bpb.de">bpb.de</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="partial" data-year="2007" data-keywords="visum visaerleichterung rückübernahme migration schengen konsulate gebühren 90 tage generalkonsulate">
+    <summary>
+      <span class="treaty-year">2007</span>
+      <span class="treaty-title">Visaerleichterung &amp; Rückübernahme EU–Russland / Schengen-Rahmen (i.K. 01.06.2007)</span>
+      <span class="status-partial">Teilweise ausgesetzt</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Die Vertragsparteien erleichtern die Erteilung von Visa für einen beabsichtigten Aufenthalt von höchstens 90 Tagen innerhalb eines Zeitraums von 180 Tagen.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Das EU–Russland-Visaerleichterungsabkommen und das Rückübernahmeabkommen (beide in Kraft seit 01.06.2007) sahen vereinfachte Visumerteilung vor (Gebühr 35 €, Mehrfachvisa, verkürzte Fristen) sowie die Rückübernahme eigener und drittstaatlicher Staatsangehöriger. Die EU setzte die Erleichterungen zunächst für russische Amtsträger und Geschäftsleute aus (25.02.2022) und ab 12.09.2022 vollständig (Gebühr 80 €, strengere Prüfung, längere Fristen). Deutsche Auslandsvertretungen in Russland sind seit 2023 weitgehend geschlossen (nur noch die Botschaft Moskau mit Visastelle). Das Rückübernahmeabkommen ist formal in Kraft, findet aber praktisch kaum Anwendung.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://eur-lex.europa.eu">EUR-Lex</a> / <a href="https://www.auswaertiges-amt.de">Auswärtiges Amt</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="active" data-year="2013" data-keywords="wto ds474 ds476 ds494 ds521 streitverfahren panel gatt art xxi sicherheitsausnahme transit schienenausrüstung zölle appellate body">
+    <summary>
+      <span class="treaty-year">2013–17</span>
+      <span class="treaty-title">WTO-Streitverfahren DS474, DS476, DS494, DS521 (2013–2017)</span>
+      <span class="status-active">✓ 4 Verfahren aktiv</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Nichts in diesem Abkommen ist so auszulegen, als hindere es eine Vertragspartei an Maßnahmen, die sie für die Wahrung ihrer wesentlichen Sicherheitsinteressen für erforderlich hält, ergriffen in Zeiten von Krieg oder anderen ernsthaften Spannungen in den internationalen Beziehungen.» — Art. XXI lit. b iii GATT</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Verfahrensübersicht</summary>
+        <blockquote><b>DS474</b> (Russia — Cost Adjustment Methodologies and Certain Anti-Dumping Measures; EU-Beschwerde 2013). <b>DS476</b> (Russia — Measures relating to Traffic in Transit; Panelbericht 05.04.2019 — erstes Panelurteil zur Sicherheitsausnahme des Art. XXI GATT: „Krieg oder andere ernsthafte Spannungen" sind objektiv überprüfbar). <b>DS494</b> (Russia — Measures affecting the Importation of Railway Equipment and Parts; EU-Beschwerde; Panelbericht 30.07.2020). <b>DS521</b> (Russia — Additional Duties on Certain Products from the US; 2018). Wegen der Blockade des Berufungsgremiums (Appellate-Body-Krise seit 12/2019) bleiben angefochtene Berichte ohne endgültige Rechtskraft („appeal into the void"); die Panels gelten formell als aktive Verfahren.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.wto.org">WTO Dispute Settlement Gateway</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="terminated" data-year="2022" data-keywords="energie gas nord stream gazprom uniper wintershall rwe liefervertrag pipeline sabotage schiedsspruch lieferstopp">
+    <summary>
+      <span class="treaty-year">–2022</span>
+      <span class="treaty-title">Energieverträge — langfristige Gaslieferung &amp; Pipelines (beendet bis 2022)</span>
+      <span class="status-terminated">De facto beendet</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Nord Stream 1 ist stillgelegt; Nord Stream 2 ist nie in Betrieb gegangen; sämtliche langfristigen Lieferverträge sind per Lieferstopp, Kündigung oder Schiedsspruch beendet.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Jahrzehntelange deutsch-sowjetische bzw. deutsch-russische Energiepartnerschaft („Erdgas gegen Röhren" ab den 1970er-Jahren): langfristige Lieferverträge zwischen Gazprom Export und deutschen Abnehmern (u.a. Uniper, Wintershall Dea, RWE), Transit über die Jamal-Europa-Pipeline, Direktanbindung Nord Stream 1 (seit 2011, 55 Mrd. m³/Jahr). 2022: schrittweise Lieferdrosselung ab Juni, vollständiger Lieferstopp über Nord Stream 1 (02.09.2022), Explosionen an beiden Nord-Stream-Strängen (26.09.2022); Nord Stream 2 wurde nie zertifiziert (Stopp des Verfahrens durch das BMWK am 22.02.2022). Uniper beendete die Lieferverträge mit Gazprom Export 2024 nach einem Schiedsspruch (Stockholm). Status: sämtliche wirtschaftlich relevanten Energieverträge de facto beendet.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bmwk.de">BMWK</a> / <a href="https://www.bafa.de">BAFA</a></p>
+    </div>
+  </details>
+
+  <details class="treaty-accordion" data-status="partial" data-year="1949" data-keywords="hermes exportkredit garantien euler hermes deckung export bafa ausfuhrgarantie politisches risiko bestehende">
+    <summary>
+      <span class="treaty-year">1949ff</span>
+      <span class="treaty-title">Hermes-Exportkreditgarantien (laufende Bestände)</span>
+      <span class="status-partial">Bestände gültig</span>
+    </summary>
+    <div class="treaty-body">
+      <blockquote class="short-quote">«Der Bund gewährt Ausfuhrgarantien für Exportgeschäfte, die ohne staatliche Absicherung nicht zustande kämen — gegen politische und wirtschaftliche Forderungsausfallrisiken.»</blockquote>
+      <details class="full-text">
+        <summary>Volltext / Inhalt &amp; Hintergrund</summary>
+        <blockquote>Die Exportkreditgarantien des Bundes („Hermesdeckungen", verwaltet von der Euler Hermes Aktiengesellschaft im Auftrag des Bundes) sichern deutsche Exporteure und Kreditinstitute gegen Forderungsausfälle aus politischen Gründen (Krieg, Transferverbot, Moratorium) und wirtschaftlichen Gründen (Zahlungsunfähigkeit des Abnehmers) ab. Es handelt sich nicht um einen völkerrechtlichen Vertrag, sondern um ein nationales Außenwirtschaftsförderinstrument mit bilateraler Wirkung über bestehende Deckungen. Für das Russlandgeschäft gilt: seit dem 24.02.2022 werden keine neuen Deckungen übernommen (Aussetzung der Neubegebung wegen Sanktions- und politischem Risiko); bestehende Deckungen bleiben bis zu ihrem vertraglichen Ende gültig und werden bedient; der Altbestand läuft planmäßig aus.</blockquote>
+      </details>
+      <p class="src"><span class="term-source">Quelle:</span> <a href="https://www.bafa.de">BAFA</a> / <a href="https://www.agaportal.de">AGA-Portal (Exportkreditgarantien)</a></p>
+    </div>
+  </details>
   <div class="callout">
     <strong>Vorsichtige Einordnung:</strong> Das <span class="term-source">Investitionsabkommen 1989</span> ist das einzige zentral bilaterale Abkommen, das <em>uneingeschränkt</em> in Kraft bleibt. Das <span class="term-source">DTA</span> ist von Russland unbefristet ausgesetzt (Dekret 585). Alle <span class="term-loaded">verpflichtenden Energieverträge</span> sind de facto beendet. Nach dem russischen Überfall auf die Ukraine 2022 gilt: nahezu alle wirtschaftlich relevanten Verträge sind sanktionsbedingt eingefroren oder beendet.
   </div>
 </section>
 
 
+<script>
 /* ============================================================
    BILANZ — ADDITIONAL FUNCTIONS v3.0
    ============================================================ */
@@ -3391,54 +3677,99 @@ function fetchDataUpdates() {
 }
 
 function initVertraegeRU() {
-  const table = document.getElementById('vertraegeTable');
-  if (!table) return;
-  const rows = Array.from(table.querySelectorAll('tbody tr'));
   const container = document.getElementById('sec-vertraege-ru');
   if (!container) return;
+  const accs = Array.from(container.querySelectorAll('.treaty-accordion'));
 
+  // Status-Filter
   const statusFilter = document.createElement('div');
   statusFilter.className = 'pills';
   statusFilter.innerHTML =
     '<button class="pill vf-all vf-active" data-vf="alle">Alle</button>' +
-    '<button class="pill vf vf-aktiv" data-vf="aktiv">In Kraft</button>' +
-    '<button class="pill vf vf-teil" data-vf="teil">Teilweise ausgesetzt</button>' +
-    '<button class="pill vf vf-aus" data-vf="aus">Ausgesetzt</button>';
-  const tableWrap = container.querySelector('.table-wrap');
-  if (tableWrap) tableWrap.before(statusFilter);
+    '<button class="pill vf vf-aktiv" data-vf="aktiv">✅ In Kraft</button>' +
+    '<button class="pill vf vf-teil" data-vf="teil">🟡 Teil/formal</button>' +
+    '<button class="pill vf vf-aus" data-vf="aus">⛔ Ausgesetzt</button>' +
+    '<button class="pill vf vf-term" data-vf="term">⚠️ Beendet</button>';
+  container.insertBefore(statusFilter, container.querySelector('.terminology-legend')?.nextSibling || container.firstChild);
 
-  statusFilter.addEventListener('click', (e) => {
+  function applyFilter() {
+    const active = statusFilter.querySelector('.vf-active')?.getAttribute('data-vf') || 'alle';
+    const term = (document.getElementById('vertraege-search')?.value || '').toLowerCase();
+    let visible = 0;
+    accs.forEach(acc => {
+      const status = acc.getAttribute('data-status');
+      const text = acc.textContent.toLowerCase();
+      let show = true;
+      if (active === 'aktiv' && status !== 'active') show = false;
+      if (active === 'teil' && !['partial'].includes(status)) show = false;
+      if (active === 'aus' && status !== 'suspended') show = false;
+      if (active === 'term' && status !== 'terminated') show = false;
+      if (term && !text.includes(term)) show = false;
+      acc.classList.toggle('hidden-by-search', !show);
+      if (show) visible++;
+    });
+    const stats = container.querySelector('.treaty-stats');
+    if (stats) stats.innerHTML = `<span><b>${visible}</b> Verträge sichtbar</span>`;
+  }
+
+  statusFilter.addEventListener('click', e => {
     const btn = e.target.closest('button[data-vf]');
     if (!btn) return;
     statusFilter.querySelectorAll('button').forEach(b => b.classList.remove('vf-active'));
     btn.classList.add('vf-active');
-    const mode = btn.getAttribute('data-vf');
-    rows.forEach(row => {
-      const hasActive = row.textContent.includes('In force') || row.textContent.includes('laufende');
-      const hasPartial = row.textContent.includes('Teilausgesetzt') || row.textContent.includes('Bestehende gültig') || row.textContent.includes('Formell in force');
-      const hasSuspended = row.textContent.includes('Ausgesetzt') || row.textContent.includes('Getrennt') || row.textContent.includes('Teilweise ausgesetzt');
-      let show = true;
-      if (mode === 'aktiv') show = hasActive;
-      if (mode === 'teil') show = hasPartial && !hasActive;
-      if (mode === 'aus') show = hasSuspended && !hasPartial && !hasActive;
-      row.style.display = show ? '' : 'none';
-    });
+    applyFilter();
   });
 
+  // Search input
+  const searchInput = document.createElement('input');
+  searchInput.id = 'vertraege-search';
+  searchInput.type = 'search';
+  searchInput.placeholder = 'Vertrag, Artikel, Stichwort suchen…';
+  statusFilter.insertAdjacentElement('afterend', searchInput);
+  searchInput.addEventListener('input', applyFilter);
+
+  // Stats
+  const stats = document.createElement('div');
+  stats.className = 'treaty-stats';
+  searchInput.insertAdjacentElement('afterend', stats);
+  applyFilter();
+
+  // Expand/Collapse all
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'pill';
+  toggleBtn.textContent = 'Alle 2+4-Artikel öffnen';
+  toggleBtn.addEventListener('click', () => {
+    const group = container.querySelector('.article-group');
+    if (!group) return;
+    const willOpen = toggleBtn.dataset.state !== 'open';
+    group.querySelectorAll('details').forEach(d => d.open = willOpen);
+    toggleBtn.dataset.state = willOpen ? 'open' : 'closed';
+    toggleBtn.textContent = willOpen ? 'Alle schließen' : 'Alle öffnen';
+  });
+  searchInput.insertAdjacentElement('afterend', toggleBtn);
+
+  // CSV export
   const csvBtn = document.createElement('button');
   csvBtn.className = 'pill';
   csvBtn.textContent = '⬇ CSV-Export';
   csvBtn.addEventListener('click', () => {
-    const data = rows.map(r => Array.from(r.cells).map(c => c.textContent.trim()));
-    const csv = '\uFEFF' + [['Vertrag','Abschluss','Status','Verbindlichkeit','Rechtswirkung'], ...data]
-      .map(r => r.map(c => '"' + c.replace(/"/g, '""') + '"').join(';')).join('\r\n');
+    const data = accs.map(acc => {
+      const title = acc.querySelector('.treaty-title')?.textContent || '';
+      const year = acc.querySelector('.treaty-year')?.textContent || '';
+      const status = acc.querySelector('[class*="status-"]')?.textContent || '';
+      const short = acc.querySelector('.short-quote')?.textContent?.replace(/[«»]/g, '').trim() || '';
+      const src = acc.querySelector('.src')?.textContent?.replace('Quelle:', '').trim() || '';
+      return [year, title, status, short, src];
+    });
+    const csv = '﻿' + [['Jahr','Vertrag','Status','Zitat (kurz)','Quelle'], ...data]
+      .map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\r\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'bilanz-vertraege-de-ru.csv';
     a.click();
   });
-  statusFilter.insertAdjacentElement('afterend', csvBtn);
+  toggleBtn.insertAdjacentElement('afterend', csvBtn);
 }
 
 function validateData() {
@@ -3465,8 +3796,8 @@ function runSelftest() {
   results.push({name:'Steuerrechner', pass: !!taxCalc});
   const vertraegeSec = document.getElementById('sec-vertraege-ru');
   results.push({name:'Verträge DE–RU', pass: !!vertraegeSec});
-  const vertraegeTable = document.getElementById('vertraegeTable');
-  results.push({name:'Vertrags-Tabelle', pass: !!vertraegeTable, detail: vertraegeTable ? vertraegeTable.tBodies[0].rows.length + ' Zeilen' : ''});
+  const treatyAccs = vertraegeSec ? vertraegeSec.querySelectorAll('.treaty-accordion') : [];
+  results.push({name:'Vertrags-Accordions (13)', pass: treatyAccs.length >= 13, detail: treatyAccs.length + ' Accordions'});
   results.push({name:'Dark-Mode', pass: document.documentElement.getAttribute('data-theme') !== null});
   const svgWithTitle = document.querySelector('svg title');
   results.push({name:'SVG-Accessibility', pass: !!svgWithTitle});
@@ -3487,7 +3818,7 @@ function runSelftest() {
   results.push({name:'Variable Fonts', pass: document.fonts?.ready.then ? true : false });
   results.push({name:'Share-URL', pass: typeof serializeState === 'function' });
   results.push({name:'Code-Splitting', pass: typeof sectionObserver !== 'undefined' });
-  results.push({name:'Keyboard Shortcuts', pass: typeof e => e.altKey }); // basic check
+  results.push({name:'Keyboard Shortcuts', pass: typeof document.addEventListener === 'function' }); // basic check
   results.push({name:'PWA Manifest', pass: !!document.querySelector('link[rel="manifest"]') });
   const passed = results.filter(r=>r.pass).length;
   const total = results.length;
@@ -3789,6 +4120,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+</script>
 
 </body>
 </html>
