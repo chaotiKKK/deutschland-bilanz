@@ -1,0 +1,41 @@
+name: Bug-Report
+description: Technischer Fehler auf der Seite
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Beschreibung
+      description: Was ist passiert?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Schritte zur Reproduktion
+      description: Wie kann der Fehler reproduziert werden?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Erwartetes Verhalten
+      description: Was hätte passieren sollen?
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot / Console-Log
+      description: Screenshot oder Console-Output
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Sonstige
+    validations:
+      required: true

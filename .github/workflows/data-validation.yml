@@ -1,0 +1,31 @@
+name: Daten-Validierung
+on:
+  pull_request:
+    paths:
+      - 'src/data/**'
+      - 'index.html'
+  schedule:
+    - cron: '0 8 * * *'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JSON-Validierung
+        run: node scripts/validateData.js --strict
+      - name: Quellen-Verifizierung
+        run: node scripts/verifySources.js
+      - name: Schema-Prüfung
+        run: npx ajv validate -s src/data/schema.json -d src/data/*.json
+      - name: Benachrichtigung bei Fehlern
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Daten-Validierung fehlgeschlagen. Bitte prüfen Sie die Daten.'
+            });

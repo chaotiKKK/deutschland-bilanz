@@ -1,0 +1,38 @@
+name: Daten-Abgleich
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  check-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - name: Daten prüfen
+        run: node scripts/checkDataUpdates.js
+      - name: Neue Daten committed?
+        run: |
+          if ! git diff --exit-code src/data/; then
+            git config user.name "bilanz-bot"
+            git config user.email "bot@bilanz-der-republik.de"
+            git commit -am "Datenaktualisierung $(date +%Y-%m-%d)"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Benachrichtigung
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ Daten-Check fehlgeschlagen. Manuelle Prüfung erforderlich.'
+            });

@@ -1,0 +1,41 @@
+name: Datenkorrektur
+description: Berichtigt eine falsche oder veraltete Zahl auf der Seite
+title: "[Datenkorrektur] "
+labels: ["data-correction", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bitte beschreiben Sie die korrekte Zahl und geben Sie die Quelle an.
+        Ohne Quelle kann die Korrektur nicht verifiziert werden.
+  - type: textarea
+    id: current
+    attributes:
+      label: Aktuelle Zahl (auf der Seite)
+      description: Wie lautet die aktuell angezeigte Zahl?
+    validations:
+      required: true
+  - type: textarea
+    id: corrected
+    attributes:
+      label: Korrekte Zahl
+      description: Was ist korrekt? Bitte mit Quelle angeben.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Quelle
+      description: Offizielle Quelle mit Datum (z.B. Destatis, BGBl.)
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorität
+      options:
+        - Niedrig (Informationszweck)
+        - Mittel (Aktualisierung erforderlich)
+        - Hoch (Falsche Zahl → sofortige Korrektur)
+    validations:
+      required: true

@@ -1,0 +1,36 @@
+name: Quellen-Update
+description: Neuere oder zusätzliche Datenquelle
+title: "[Quellen-Update] "
+labels: ["source", "research"]
+body:
+  - type: textarea
+    id: source-name
+    attributes:
+      label: Quellenname
+      description: Offizielle Quelle (z.B. Destatis, BKA, Eurostat)
+    validations:
+      required: true
+  - type: textarea
+    id: source-url
+    attributes:
+      label: URL
+      description: Direktlink zur Quelle
+    validations:
+      required: true
+  - type: textarea
+    id: last-updated
+    attributes:
+      label: Stand der Quelle
+      description: Wann wurde die Quelle zuletzt aktualisiert?
+    validations:
+      required: true
+  - type: textarea
+    id: affected-data
+    attributes:
+      label: Betroffene Daten
+      description: Welche Kennzahlen werden aktualisiert?
+  - type: textarea
+    id: notes
+    attributes:
+      label: Hinweise
+      description: Weitere Informationen für die Integration
