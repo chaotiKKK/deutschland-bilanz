@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.BilanzRepublik" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#1c2640</item>
+        <item name="colorPrimaryVariant">#2c3a54</item>
+        <item name="colorOnPrimary">#b9953f</item>
+        <item name="colorSecondary">#b9953f</item>
+        <item name="colorOnSecondary">#1c2640</item>
+        <item name="android:statusBarColor">#1c2640</item>
+        <item name="android:navigationBarColor">#faf8f2</item>
+    </style>
+
+    <color name="primary">#1c2640</color>
+    <color name="accent">#b9953f</color>
+    <color name="background">#faf8f2</color>
+    <color name="ink">#1c2640</color>
+</resources>

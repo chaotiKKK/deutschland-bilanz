@@ -1,0 +1,29 @@
+{
+  "name": "deutschland-bilanz",
+  "version": "2.3.0",
+  "description": "Die Bilanz der Republik — Haushaltsbuch über Ausgaben, Steuern, Schulden, Soziales und Energie Deutschlands",
+  "type": "module",
+  "scripts": {
+    "test": "node --test scripts/repo-hygiene.test.mjs",
+    "validate": "node --test scripts/repo-hygiene.test.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.3.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.0",
+    "jest": "^29.7.0",
+    "axe-core": "^4.10.0",
+    "@axe-core/puppeteer": "^4.10.0",
+    "@lhci/cli": "^0.14.0",
+    "gh-pages": "^6.2.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaotiKKK/deutschland-bilanz.git"
+  },
+  "homepage": "https://chaotiKKK.github.io/deutschland-bilanz/",
+  "keywords": ["germany", "budget", "fiscal", "politics", "data", "transparency", "pwa"],
+  "author": "Die Bilanz der Republik Contributors",
+  "license": "CC-BY-4.0"
+}
